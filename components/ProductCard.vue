@@ -1,0 +1,93 @@
+<template>
+  <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: isTablet, placement: 'bottom' }">
+    <div class="flex w-full flex-col rounded-lg shadow">
+      <NuxtLink
+        class="relative h-full w-full px-4 pt-4 before:absolute before:inset-0 before:z-[1]"
+        :to="`/product/${product_id}`"
+      >
+        <UCard
+          class="flex h-full flex-col space-y-3 [&>*:nth-child(2)]:h-full [&>*:nth-child(2)]:flex-1"
+          :ui="cardConfig"
+        >
+          <template #header>
+            <Image
+              :image-src="image"
+              :width="200"
+              :height="200"
+              :lazy="true"
+              :title="title"
+              container-class="aspect-w-[110] aspect-h-[110]"
+              class="object-contain"
+            />
+          </template>
+
+          <div class="flex h-full flex-col space-y-3">
+            <span class="line-clamp-3 flex-1 text-sm md:text-base">{{ title }}</span>
+
+            <span class="text-center text-lg font-bold">{{ price }}$</span>
+          </div>
+        </UCard>
+      </NuxtLink>
+
+      <ClientOnly>
+        <UButton
+          v-if="!cartStore.isInCart(product.product_id)"
+          block
+          :ui="buttonConfig"
+          @click="cartStore.addToCart(product)"
+          >{{ isTablet ? 'Добавить в корзину' : 'Добавить' }}</UButton
+        >
+
+        <UButton v-else block :ui="buttonConfig" variant="outline" @click="navigateTo('/cart')">
+          {{ isTablet ? 'Добавлен в корзину' : 'Добавлен' }}
+        </UButton>
+
+        <template #fallback>
+          <div class="flex">
+            <USkeleton class="h-8 w-full" :ui="buttonSkeletonConfig" />
+          </div>
+        </template>
+      </ClientOnly>
+    </div>
+  </UTooltip>
+</template>
+
+<script setup lang="ts">
+import type { Product } from '~/utils/types';
+
+const { ...props } = defineProps<Product>();
+
+const windowSize = useWindowSize();
+
+const cartStore = useCartStore();
+
+const isTablet = computed(() => windowSize.width.value > 768);
+const product = computed(() => ({ ...props }));
+
+const cardConfig = {
+  base: '',
+  shadow: '',
+  ring: 'ring-0',
+  body: {
+    padding: 'sm:py-2 px-0 sm:px-0',
+  },
+  header: {
+    padding: '',
+  },
+};
+
+const tooltipConfig = {
+  base: 'h-fit text-clip',
+  container: 'z-[2]',
+};
+
+const buttonConfig = {
+  rounded: 'rounded-none rounded-b-lg',
+};
+
+const buttonSkeletonConfig = {
+  base: '',
+  rounded: 'rounded-none rounded-b-lg',
+  background: 'bg-gray-200',
+};
+</script>
