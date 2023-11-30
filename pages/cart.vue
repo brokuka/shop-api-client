@@ -1,6 +1,6 @@
 <template>
-  <div v-if="cartStore.items?.length" class="relative grid grid-cols-3 gap-x-3">
-    <CartList class="col-span-2" :items="cartStore.items" />
+  <div v-if="cartStore.items?.length" class="relative grid grid-cols-none gap-3 lg:grid-cols-3">
+    <CartList class="lg:col-span-2" :items="cartStore.items" />
 
     <CartSummary />
   </div>

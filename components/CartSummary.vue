@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <UCard class="sticky right-0 top-3 h-fit">
+  <div class="w-full">
+    <UCard class="w-full md:sticky md:right-0 md:top-3 md:h-fit">
       <template #header>
         <span class="text-xl font-medium">Ваш заказ</span>
       </template>
@@ -22,6 +22,7 @@ const cartStore = useCartStore();
 const modalStore = useModalStore();
 const authStore = useAuthStore();
 const toats = useToast();
+const userStore = useUserStore();
 
 const isSubmitLoading = ref(false);
 
@@ -34,7 +35,10 @@ const onSubmit = async () => {
 
   const { data } = await useAuthFetch<{ message: string }>('/order', {
     method: 'POST',
-    body: cartStore.items?.map(({ product_id, quantity }) => ({ product_id, quantity })),
+    body: {
+      user_id: userStore.user?.user_id,
+      products: cartStore.items?.map(({ product_id, quantity }) => ({ product_id, quantity })),
+    },
   });
 
   if (data.value) {

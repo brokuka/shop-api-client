@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="">
     <ul class="flex items-center space-x-2">
       <li v-for="link in LINKS" :key="link.id">
         <ULink class="hover:text-primary p-2 text-sm/6 font-semibold" :to="link.href" active-class="text-primary">{{

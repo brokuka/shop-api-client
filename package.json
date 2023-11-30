@@ -2,8 +2,9 @@
 	"name": "nuxt-app",
 	"private": true,
 	"scripts": {
-		"build": "nuxt build",
 		"dev": "nuxt dev",
+		"build:dev": "nuxt build --dotenv .env.development",
+		"build:prod": "nuxt build --dotenv .env.production",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"

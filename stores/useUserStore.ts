@@ -3,11 +3,11 @@ import type { ErrorPayload } from './useAuthStore';
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null);
+  const authStore = useAuthStore();
+  const session = useSessionStorage<string>('session', null);
 
   const fetchUser = async () => {
     const { data } = await useAuthFetch<User, ErrorPayload>('/user');
-
-    const authStore = useAuthStore();
 
     if (data.value) {
       authStore.isAuthenticated = true;
@@ -17,6 +17,8 @@ export const useUserStore = defineStore('user', () => {
 
   const clearUser = () => {
     user.value = null;
+    authStore.isAuthenticated = false;
+    session.value = undefined;
   };
 
   return { user, fetchUser, clearUser };

@@ -2,7 +2,7 @@
   <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: isTablet, placement: 'bottom' }">
     <div class="flex w-full flex-col rounded-lg shadow">
       <NuxtLink
-        class="relative h-full w-full px-4 pt-4 before:absolute before:inset-0 before:z-[1]"
+        class="relative h-full w-full px-2 pt-4 before:absolute before:inset-0 before:z-[1] md:px-4"
         :to="`/product/${product_id}`"
       >
         <UCard
@@ -69,7 +69,7 @@ const cardConfig = {
   shadow: '',
   ring: 'ring-0',
   body: {
-    padding: 'sm:py-2 px-0 sm:px-0',
+    padding: 'py-3 sm:py-2 px-0 sm:px-0',
   },
   header: {
     padding: '',

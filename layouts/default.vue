@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen flex-col">
+  <div class="relative flex h-screen flex-col">
     <Header />
 
     <Main>
@@ -7,5 +7,6 @@
     </Main>
 
     <Footer />
+    <MobileNavigation />
   </div>
 </template>

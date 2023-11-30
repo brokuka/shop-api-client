@@ -10,6 +10,7 @@
 const authStore = useAuthStore();
 const toast = useToast();
 const cartStore = useCartStore();
+const userStore = useUserStore();
 
 const ITEMS = [
   [
@@ -26,6 +27,7 @@ const ITEMS = [
       click: async () => {
         const { data } = await authStore.logout();
         cartStore.clearCart();
+        userStore.clearUser();
 
         toast.add({ title: data.value?.message });
       },

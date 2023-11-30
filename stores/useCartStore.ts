@@ -16,10 +16,14 @@ export type CartResoponse = {
   total_quantity: number;
 };
 
+export type CartStatus = 'idle' | 'loading' | 'loaded';
+
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore();
+  const userStore = useUserStore();
 
   const items = ref<Nullable<CartItem[]>>(null);
+  const status = ref<CartStatus>('idle');
 
   const totalQuantity = computed(() => items.value?.reduce((acc, item) => acc + item.quantity, 0));
   const totalPrice = computed(() => items.value?.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2));
@@ -28,12 +32,14 @@ export const useCartStore = defineStore('cart', () => {
 
     return Boolean(existingProduct);
   });
+  const isLoading = computed(() => status.value === 'loading');
 
   const fetchCart = async () => {
     const { data: cart } = await useAuthFetch<CartResoponse>('/cart');
 
     if (cart.value) {
       items.value = cart.value.items;
+      status.value = 'loaded';
     }
   };
 
@@ -44,6 +50,7 @@ export const useCartStore = defineStore('cart', () => {
       await useAuthFetch('/cart', {
         method: 'POST',
         body: {
+          user_id: userStore.user?.user_id,
           product_id,
           quantity: 1,
         },
@@ -71,11 +78,14 @@ export const useCartStore = defineStore('cart', () => {
     if (authStore.isAuthenticated) {
       return await useAuthFetch(`/cart/${product_id}`, {
         method: 'DELETE',
+        body: {
+          user_id: userStore.user?.user_id,
+        },
       });
     }
   };
 
-  const changeProductCount = async (product_id: number, quantity: number) => {
+  const changeProductCount = (product_id: number, quantity: number) => {
     const existingProduct = items.value?.find((item) => item.product_id === product_id);
 
     if (!existingProduct) return;
@@ -83,14 +93,27 @@ export const useCartStore = defineStore('cart', () => {
     existingProduct.quantity = quantity;
 
     if (authStore.isAuthenticated) {
-      await useAuthFetch('/cart/update', {
-        method: 'POST',
-        body: {
-          product_id,
-          quantity: existingProduct.quantity,
-        },
-      });
+      fetchChangeProductCount(existingProduct);
     }
+  };
+
+  const fetchChangeProductCount = useDebounceFn(async (existingProduct: CartItem) => {
+    status.value = 'loading';
+
+    await useAuthFetch('/cart/update', {
+      method: 'POST',
+      body: {
+        user_id: userStore.user?.user_id,
+        product_id: existingProduct.product_id,
+        quantity: existingProduct.quantity,
+      },
+    });
+
+    status.value = 'loaded';
+  }, 1000);
+
+  const changeStatus = (to: CartStatus) => {
+    status.value = to;
   };
 
   const clearCart = () => {
@@ -99,13 +122,16 @@ export const useCartStore = defineStore('cart', () => {
 
   return {
     items,
+    status,
     totalPrice,
     totalQuantity,
+    isInCart,
+    isLoading,
     addToCart,
     removeFromCart,
-    isInCart,
     changeProductCount,
     fetchCart,
+    changeStatus,
     clearCart,
   };
 });

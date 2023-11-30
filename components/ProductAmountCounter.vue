@@ -20,13 +20,15 @@
       @change="onChange"
     />
 
-    <UTooltip text="Увеличить" :popper="{ arrow: true }">
+    <UTooltip text="Увеличить" :popper="{ arrow: true }" :prevent="cartStore.isLoading">
       <UButton icon="i-mdi-plus" variant="soft" @click="emit('increase')" />
     </UTooltip>
   </div>
 </template>
 
 <script setup lang="ts">
+const cartStore = useCartStore();
+
 const props = defineProps<{
   value: number;
 }>();

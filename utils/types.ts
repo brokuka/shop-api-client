@@ -5,6 +5,7 @@ export type User = {
   middlename: Nullable<string>;
   email: string;
   group: string;
+  session: string;
 };
 
 export type Product = {

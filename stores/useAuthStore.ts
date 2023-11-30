@@ -16,6 +16,7 @@ export type ErrorPayload = {
 export const useAuthStore = defineStore('auth', () => {
   const userStore = useUserStore();
   const cartStore = useCartStore();
+  const session = useSessionStorage<string>('session', null);
 
   const isAuthenticated = ref(false);
 
@@ -29,6 +30,8 @@ export const useAuthStore = defineStore('auth', () => {
       isAuthenticated.value = true;
       userStore.user = data.value;
       cartStore.fetchCart();
+
+      session.value = data.value.session;
     }
 
     return { data, ...etc };
@@ -43,14 +46,22 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logout = async () => {
     isAuthenticated.value = false;
-    userStore.clearUser();
+
     navigateTo('/', { replace: true });
 
-    return await useAuthFetch<MessageResponse>('/auth/logout');
+    return await useAuthFetch<MessageResponse>('/auth/logout', {
+      method: 'POST',
+      body: {
+        user_id: userStore.user?.user_id,
+      },
+    });
   };
 
   const refresh = async () => {
     await useAuthFetch('/auth/refresh', {
+      headers: {
+        authorization: `Bearer ${session.value}`,
+      },
       body: {
         user_id: userStore.user?.user_id,
       },
