@@ -39,7 +39,7 @@
             @decrease="onAmountDecrease"
           />
 
-          <UTooltip text="Удалить с корзины" :popper="{ arrow: true }" :ui="{ wrapper: 'ml-auto' }">
+          <UTooltip text="Удалить с корзины" :popper="{ arrow: isTablet }" :ui="{ wrapper: 'ml-auto' }">
             <UButton
               icon="i-mdi-delete-outline"
               color="red"
@@ -67,7 +67,7 @@
         @decrease="onAmountDecrease"
       />
 
-      <UTooltip text="Удалить с корзины" :popper="{ arrow: true }" :ui="{ wrapper: 'ml-auto' }">
+      <UTooltip text="Удалить с корзины" :popper="{ arrow: isTablet }" :ui="{ wrapper: 'ml-auto' }">
         <UButton icon="i-mdi-delete-outline" color="red" variant="soft" @click="cartStore.removeFromCart(product_id)" />
       </UTooltip>
     </div>
@@ -77,11 +77,14 @@
 <script setup lang="ts">
 import type { CartItem } from '~/stores/useCartStore';
 
+const cartStore = useCartStore();
+const windowSize = useWindowSize();
+
 const props = defineProps<CartItem>();
 
 const { quantity } = toRefs(props);
 
-const cartStore = useCartStore();
+const isTablet = computed(() => windowSize.width.value > 768);
 
 const onAmountChange = (value: number) => {
   cartStore.changeProductCount(props.product_id, value);
