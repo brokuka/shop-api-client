@@ -49,12 +49,19 @@ export const useAuthStore = defineStore('auth', () => {
 
     navigateTo('/', { replace: true });
 
-    return await useAuthFetch<MessageResponse>('/auth/logout', {
+    const { data } = await useAuthFetch<MessageResponse>('/auth/logout', {
       method: 'POST',
       body: {
         user_id: userStore.user?.user_id,
       },
     });
+
+    if (!data.value) return;
+
+    cartStore.clearCart();
+    userStore.clearUser();
+
+    return data.value;
   };
 
   const refresh = async () => {

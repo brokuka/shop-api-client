@@ -6,12 +6,7 @@
       <NavigationLinks class="hidden md:block" />
 
       <div class="hidden items-center space-x-2 md:flex">
-        <ChipButton
-          icon="i-mdi-cart-outline"
-          variant="ghost"
-          :count="cartStore.totalQuantity"
-          @click="navigateTo('/cart')"
-        />
+        <QuantityButton icon="i-mdi-cart-outline" variant="ghost" :quantity="cartStore.totalQuantity" to="/cart" />
 
         <UButton
           v-if="!authStore.isAuthenticated"

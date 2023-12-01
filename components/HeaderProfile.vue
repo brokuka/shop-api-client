@@ -9,8 +9,6 @@
 <script setup lang="ts">
 const authStore = useAuthStore();
 const toast = useToast();
-const cartStore = useCartStore();
-const userStore = useUserStore();
 
 const ITEMS = [
   [
@@ -25,11 +23,9 @@ const ITEMS = [
       icon: 'i-mdi-location-exit',
       slot: 'exit',
       click: async () => {
-        const { data } = await authStore.logout();
-        cartStore.clearCart();
-        userStore.clearUser();
+        const data = await authStore.logout();
 
-        toast.add({ title: data.value?.message });
+        toast.add({ title: data?.message });
       },
     },
   ],

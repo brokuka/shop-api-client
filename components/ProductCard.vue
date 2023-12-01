@@ -1,5 +1,5 @@
 <template>
-  <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: isTablet, placement: 'bottom' }">
+  <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: true, placement: 'bottom' }" :prevent="!isTablet">
     <div class="flex w-full flex-col rounded-lg shadow dark:bg-gray-900">
       <NuxtLink
         class="relative h-full w-full px-2 pt-4 before:absolute before:inset-0 before:z-[1] md:px-4"

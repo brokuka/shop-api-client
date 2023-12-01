@@ -18,5 +18,12 @@ export const RegisterSchema = LoginSchema.extend({
   path: ['confirm_password'],
 });
 
+export const UpdateProfileDataSchema = z.object({
+  name: z.string(),
+  surname: z.string(),
+  middlename: z.string(),
+});
+
 export type LoginSchemaType = FormSubmitEvent<z.output<typeof LoginSchema>>;
 export type RegisterSchemaType = FormSubmitEvent<z.output<typeof RegisterSchema>>;
+export type UpdateProfileDataSchemaType = FormSubmitEvent<z.output<typeof UpdateProfileDataSchema>>;

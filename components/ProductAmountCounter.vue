@@ -1,6 +1,10 @@
 <template>
   <div class="flex space-x-2">
-    <UTooltip text="Уменьшить" :popper="{ arrow: true }" :prevent="isDecreaseButtonDisabled">
+    <UTooltip
+      text="Уменьшить"
+      :popper="{ arrow: true }"
+      :prevent="cartStore.isLoading || isDecreaseButtonDisabled || !isTablet"
+    >
       <UButton
         icon="i-mdi-minus"
         color="red"
@@ -20,7 +24,7 @@
       @change="onChange"
     />
 
-    <UTooltip text="Увеличить" :popper="{ arrow: true }" :prevent="cartStore.isLoading">
+    <UTooltip text="Увеличить" :popper="{ arrow: true }" :prevent="cartStore.isLoading || !isTablet">
       <UButton icon="i-mdi-plus" variant="soft" @click="emit('increase')" />
     </UTooltip>
   </div>
@@ -28,6 +32,7 @@
 
 <script setup lang="ts">
 const cartStore = useCartStore();
+const windowSize = useWindowSize();
 
 const props = defineProps<{
   value: number;
@@ -40,6 +45,7 @@ const emit = defineEmits<{
 }>();
 
 const isDecreaseButtonDisabled = computed(() => props.value <= 1);
+const isTablet = computed(() => windowSize.width.value > 768);
 
 const onChange = (e: Event) => {
   const target = e.target as HTMLInputElement;
