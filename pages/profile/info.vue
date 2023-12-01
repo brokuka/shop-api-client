@@ -20,7 +20,7 @@
       :ui="tooltipConfig"
       :prevent="isDirty"
     >
-      <UButton type="submit" block :disabled="!isDirty"> Сохранить </UButton>
+      <UButton type="submit" block :disabled="!isDirty" :loading="isLoading"> Сохранить </UButton>
     </UTooltip>
   </UForm>
 </template>

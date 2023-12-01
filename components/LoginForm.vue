@@ -16,7 +16,7 @@
       <UInput v-model="state.password" placeholder="Введите пароль" type="password" />
     </UFormGroup>
 
-    <UButton type="submit" block> Войти </UButton>
+    <UButton type="submit" block :loading="isLoading"> Войти </UButton>
   </UForm>
 
   <UDivider label="или" />
@@ -35,6 +35,7 @@ const modalStore = useModalStore();
 const toast = useToast();
 
 const loginErrorMessage = ref('');
+const isLoading = ref(false);
 
 const state = reactive({
   email: undefined,
@@ -42,6 +43,8 @@ const state = reactive({
 });
 
 const onSubmit = async (event: LoginSchemaType) => {
+  isLoading.value = true;
+
   const { email, password } = event.data;
 
   const { data, error } = await authStore.login({ email, password });
@@ -55,6 +58,8 @@ const onSubmit = async (event: LoginSchemaType) => {
 
     modalStore.closeAuthModal();
   }
+
+  isLoading.value = true;
 };
 
 const onError = (event: FormErrorEvent) => {

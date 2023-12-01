@@ -27,7 +27,7 @@
       <UInput v-model="state.confirm_password" placeholder="Повторите пароль" type="password" />
     </UFormGroup>
 
-    <UButton type="submit" block :disabled="isFormLoading"> Зарегистрироваться </UButton>
+    <UButton type="submit" block :loading="isLoading"> Зарегистрироваться </UButton>
   </UForm>
 
   <UDivider label="или" />
@@ -48,7 +48,7 @@ const toast = useToast();
 const form = ref();
 const inputEmail = ref<HTMLInputElement>();
 const registerErrorMessage = ref('');
-const isFormLoading = ref(false);
+const isLoading = ref(false);
 
 const state = reactive({
   email: undefined,
@@ -57,7 +57,7 @@ const state = reactive({
 });
 
 const onSubmit = async (event: RegisterSchemaType) => {
-  isFormLoading.value = true;
+  isLoading.value = true;
 
   const { email, password } = event.data;
 
@@ -71,7 +71,7 @@ const onSubmit = async (event: RegisterSchemaType) => {
     modalStore.switchAuthModalScreen();
   }
 
-  isFormLoading.value = false;
+  isLoading.value = false;
 };
 
 const onError = (event: FormErrorEvent) => {
