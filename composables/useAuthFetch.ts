@@ -28,7 +28,7 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
     headers: {
       ...options?.headers,
       ...cookies,
-      authorization: `Bearer ${session.value}`,
+      ...(session.value && { authorization: `Bearer ${session.value}` }),
     },
     ...options,
     onResponseError: async ({ response, request, options }) => {
@@ -37,7 +37,7 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
           baseURL: useRuntimeConfig().public.API_DOMAIN,
           method: 'POST',
           headers: {
-            authorization: `Bearer ${session.value}`,
+            ...(session.value && { authorization: `Bearer ${session.value}` }),
           },
           body: {
             user_id: userStore.user?.user_id,

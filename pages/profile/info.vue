@@ -49,12 +49,16 @@ const isDirty = computed(() => {
   return false;
 });
 
+const isLoading = ref(false);
+
 type UpdateProfileDataResponse = {
   user: User;
   message: string;
 };
 
 const onSubmit = async (event: UpdateProfileDataSchemaType) => {
+  isLoading.value = true;
+
   const { data } = await useAuthFetch<UpdateProfileDataResponse>('/user', {
     method: 'PATCH',
     body: {
@@ -67,6 +71,8 @@ const onSubmit = async (event: UpdateProfileDataSchemaType) => {
     userStore.user = data.value.user;
     toast.add({ title: data.value.message });
   }
+
+  isLoading.value = false;
 };
 
 const tooltipConfig = {

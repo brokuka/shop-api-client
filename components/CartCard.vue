@@ -72,7 +72,7 @@
         @decrease="onAmountDecrease"
       />
 
-      <UTooltip text="Удалить с корзины" :popper="{ arrow: isTablet }" :ui="{ wrapper: 'ml-auto' }">
+      <UTooltip text="Удалить с корзины" :ui="{ wrapper: 'ml-auto' }" :prevent="!isTablet">
         <UButton icon="i-mdi-delete-outline" color="red" variant="soft" @click="cartStore.removeFromCart(product_id)" />
       </UTooltip>
     </div>
