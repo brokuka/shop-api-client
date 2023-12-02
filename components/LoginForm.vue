@@ -59,7 +59,7 @@ const onSubmit = async (event: LoginSchemaType) => {
     modalStore.closeAuthModal();
   }
 
-  isLoading.value = true;
+  isLoading.value = false;
 };
 
 const onError = (event: FormErrorEvent) => {
