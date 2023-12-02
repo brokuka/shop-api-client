@@ -1,6 +1,6 @@
 <template>
   <UAlert
-    v-if="loginErrorMessage"
+    v-if="loginErrorMessage && !isLoading"
     color="red"
     variant="subtle"
     title="Ошибка при авторизации!"
@@ -16,7 +16,9 @@
       <UInput v-model="state.password" placeholder="Введите пароль" type="password" />
     </UFormGroup>
 
-    <UButton type="submit" block :loading="isLoading"> Войти </UButton>
+    <UButton type="submit" block :loading="isLoading">
+      {{ isLoading ? 'Происходит авторизация' : 'Войти' }}
+    </UButton>
   </UForm>
 
   <UDivider label="или" />
