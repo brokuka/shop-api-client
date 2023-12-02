@@ -14,7 +14,7 @@
         />
       </div>
 
-      <div class="flex flex-col space-y-5">
+      <div class="flex flex-1 flex-col space-y-5">
         <div class="flex flex-1 flex-col space-y-2">
           <div class="flex flex-col sm:flex-row sm:justify-between sm:space-x-4">
             <NuxtLink :to="`/product/${product_id}`">
