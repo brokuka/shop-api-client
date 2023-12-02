@@ -18,7 +18,7 @@
       text="Чтобы сохранить, нужно изменить как минимум одно поле"
       :popper="{ arrow: true }"
       :ui="tooltipConfig"
-      :prevent="isDirty"
+      :prevent="isDirty || !isTablet"
     >
       <UButton type="submit" block :disabled="!isDirty" :loading="isLoading"> Сохранить </UButton>
     </UTooltip>
@@ -30,6 +30,7 @@ import type { User } from '~/utils/types';
 
 const userStore = useUserStore();
 const toast = useToast();
+const windowSize = useWindowSize();
 
 const state = reactive({
   name: userStore.user?.name ?? '',
@@ -48,6 +49,7 @@ const isDirty = computed(() => {
 
   return false;
 });
+const isTablet = computed(() => windowSize.width.value >= 768);
 
 const isLoading = ref(false);
 

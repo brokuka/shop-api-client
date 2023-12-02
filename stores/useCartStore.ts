@@ -46,28 +46,24 @@ export const useCartStore = defineStore('cart', () => {
   const addToCart = async (product: Product) => {
     const { product_id } = product;
 
-    if (authStore.isAuthenticated) {
-      await useAuthFetch('/cart', {
-        method: 'POST',
-        body: {
-          user_id: userStore.user?.user_id,
-          product_id,
-          quantity: 1,
-        },
-      });
-    }
-
     const existingProduct = items.value?.find((item) => item.product_id === product.product_id);
-
-    if (existingProduct) {
-      return existingProduct.quantity++;
-    }
 
     if (!items.value) {
       return (items.value = [{ ...product, quantity: 1 }]);
     }
 
     items.value = [...items.value, { ...product, quantity: 1 }];
+
+    if (authStore.isAuthenticated) {
+      await useAuthFetch('/cart', {
+        method: 'POST',
+        body: {
+          user_id: userStore.user?.user_id,
+          product_id,
+          quantity: existingProduct?.quantity ?? 1,
+        },
+      });
+    }
   };
 
   const removeFromCart = async (product_id: number) => {
