@@ -95,3 +95,12 @@ yarn preview
 # bun
 bun run preview
 ```
+
+### Что где хостится
+
+- Front и Back часть находятся на [Vercel](https://vercel.com/)
+- База данных находиться на [Render](https://render.com/)
+
+---
+
+Если нашли ошибку либо опечатку в описании, пожалуйста напишите об этом создав в [ишью](https://github.com/brokuka/shop-api-client/issues).
