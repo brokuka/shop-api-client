@@ -5,7 +5,9 @@
     <CartSummary />
   </div>
 
-  <div v-else>Корзина пуста ;(</div>
+  <div v-else class="flex h-full items-center justify-center">
+    <Result title="Корзина пуста 😳" />
+  </div>
 </template>
 
 <script setup lang="ts">

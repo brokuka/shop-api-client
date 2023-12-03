@@ -1,5 +1,4 @@
 <template>
-  <!-- :to="`/order/${order.order_id}`" -->
   <NuxtLink class="flex space-x-3.5" :to="`/profile/order/${order.order_id}`">
     <Image :image-src="firstProductImage" :width="80" :height="80" title="" />
 
