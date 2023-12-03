@@ -15,12 +15,19 @@
     </UFormGroup>
 
     <UTooltip
-      text="Чтобы сохранить, нужно изменить как минимум одно поле"
+      class="flex flex-col space-y-2"
+      :text="saveButtonMessage"
       :popper="{ arrow: true }"
       :ui="tooltipConfig"
       :prevent="isDirty || !isTablet"
     >
-      <UButton type="submit" block :disabled="!isDirty" :loading="isLoading"> Сохранить </UButton>
+      <UButton type="submit" block :disabled="!isDirty" :loading="isLoading">
+        Сохранить<span class="text-red-500 md:hidden">*</span>
+      </UButton>
+
+      <div class="text-xs md:hidden">
+        <span class="text-red-500">*</span> - <span>{{ saveButtonMessage }}</span>
+      </div>
     </UTooltip>
   </UForm>
 </template>
@@ -81,4 +88,6 @@ const tooltipConfig = {
   wrapper: 'w-full',
   width: '',
 };
+
+const saveButtonMessage = 'Чтобы сохранить, нужно изменить как минимум одно поле';
 </script>
