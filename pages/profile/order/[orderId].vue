@@ -12,7 +12,7 @@ const userStore = useUserStore();
 
 const { orderId } = route.params;
 
-const { data, error } = await useAuthFetch<Order, ApiErrorResponse>(`/order/${orderId}`, {
+const { error } = await useAuthFetch<Order, ApiErrorResponse>(`/order/${orderId}`, {
   method: 'POST',
   body: {
     user_id: userStore.user?.user_id,
@@ -24,6 +24,4 @@ if (error.value) {
     statusCode: 404,
   });
 }
-
-watchEffect(() => console.log(data.value));
 </script>

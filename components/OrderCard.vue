@@ -30,6 +30,4 @@ const props = defineProps<{
 
 // Временно используем картинку первого продукта
 const firstProductImage = props.order.items[0].product.image;
-
-console.log(firstProductImage);
 </script>
