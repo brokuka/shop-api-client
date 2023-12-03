@@ -98,7 +98,7 @@ bun run preview
 
 ### Что где хостится
 
-- Front и Back часть находятся на [Vercel](https://vercel.com/)
+- Front и [Back](https://github.com/brokuka/shop-api-server) часть находятся на [Vercel](https://vercel.com/)
 - База данных находиться на [Render](https://render.com/)
 
 ---
