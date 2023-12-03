@@ -16,3 +16,28 @@ export type Product = {
   description: string;
   category: string;
 };
+
+export type Order = {
+  order_id: number;
+  user_id: number;
+  total_price: number;
+  total_quantity: number;
+  date: string;
+  items: OrderItem[];
+};
+
+export type OrderItem = {
+  order_item_id: number;
+  order_id: number;
+  user_id: number;
+  product: Product & { quantity: number };
+};
+
+export type ApiResponse<T> = {
+  data: T;
+  message?: string;
+};
+
+export type ApiErrorResponse = {
+  message: string;
+};

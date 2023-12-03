@@ -12,10 +12,16 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxt/ui', '@pinia/nuxt', '@vueuse/nuxt'],
+  modules: ['@nuxt/ui', '@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt'],
 
   ui: {
     icons: ['mdi'],
+  },
+
+  dayjs: {
+    locales: ['en', 'ru'],
+    defaultLocale: 'ru',
+    plugins: ['localizedFormat'],
   },
 
   runtimeConfig: {

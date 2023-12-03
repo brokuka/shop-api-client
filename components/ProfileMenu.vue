@@ -1,19 +1,21 @@
 <template>
-  <ClientOnly>
-    <UVerticalNavigation v-if="isTablet" :links="links" :ui="navigationConfig" />
+  <UVerticalNavigation class="hidden md:block" :links="links" :ui="navigationConfig" />
 
-    <UDropdown v-else :items="items" :popper="{ placement: 'bottom-start', strategy: 'absolute' }" :ui="dropdownConfig">
-      <UButton color="white" label="Навигация профиля" trailing-icon="i-heroicons-chevron-down-20-solid" block />
-    </UDropdown>
-  </ClientOnly>
+  <UDropdown
+    class="md:hidden"
+    :items="items"
+    :popper="{ placement: 'bottom-start', strategy: 'absolute' }"
+    :ui="dropdownConfig"
+  >
+    <UButton color="white" label="Навигация профиля" trailing-icon="i-heroicons-chevron-down-20-solid" block />
+  </UDropdown>
 </template>
 
 <script setup lang="ts">
 const authStore = useAuthStore();
 const toast = useToast();
-const windowSize = useWindowSize();
 
-const isTablet = computed(() => windowSize.width.value >= 768);
+const isLoading = ref(true);
 
 const links = [
   {
@@ -22,8 +24,7 @@ const links = [
   },
   {
     label: 'Мои заказы',
-    // to: '/profile/orders',
-    disabled: true,
+    to: '/profile/orders',
   },
   {
     label: 'Избранное',
@@ -50,4 +51,6 @@ const navigationConfig = {
 const dropdownConfig = {
   width: 'w-full',
 };
+
+onMounted(() => (isLoading.value = false));
 </script>

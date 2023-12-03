@@ -1,1 +1,3 @@
-<template>product</template>
+<template>
+  <EmptyResult />
+</template>
