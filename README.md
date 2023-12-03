@@ -96,7 +96,7 @@ yarn preview
 bun run preview
 ```
 
-### Что где хостится
+## Что где хостится
 
 - Front и [Back](https://github.com/brokuka/shop-api-server) часть находятся на [Vercel](https://vercel.com/)
 - База данных находиться на [Render](https://render.com/)
