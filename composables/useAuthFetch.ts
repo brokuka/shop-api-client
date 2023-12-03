@@ -19,7 +19,6 @@ type RequestMethod =
   | 'trace';
 
 export const useAuthFetch: typeof useFetch = (url, options) => {
-  // const cookies = useRequestHeaders(['cookie']);
   const userStore = useUserStore();
   const session = useSessionStorage<string>('session', null);
 
@@ -27,7 +26,6 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
     credentials: 'include',
     headers: {
       ...options?.headers,
-      // ...cookies,
       ...(session.value && { authorization: `Bearer ${session.value}` }),
     },
     ...options,
