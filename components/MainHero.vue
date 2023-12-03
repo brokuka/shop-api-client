@@ -27,7 +27,6 @@
         </span>
       </div>
     </template>
-    <!-- <UButton variant="link" :padded="false" size="xl" class="text-xl md:h-full">ишью</UButton> -->
   </div>
 </template>
 

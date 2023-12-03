@@ -5,6 +5,8 @@ type AuthModal = {
   screen: AuthScreen;
 };
 
+const MODAL_ANIMATION_MS = 200;
+
 export const useModalStore = defineStore('modal', () => {
   const authModal = reactive<AuthModal>({ opened: false, screen: 'login' });
 
@@ -24,7 +26,7 @@ export const useModalStore = defineStore('modal', () => {
   //		подставляем значение(мс) которое равно анимации закрытия
   watchEffect(() => {
     if (!authModal.opened) {
-      setTimeout(() => (authModal.screen = 'login'), 200);
+      setTimeout(() => (authModal.screen = 'login'), MODAL_ANIMATION_MS);
     }
   });
 
