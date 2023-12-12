@@ -25,7 +25,7 @@ const ITEMS = [
       click: async () => {
         const data = await authStore.logout();
 
-        toast.add({ title: data?.message });
+        data?.message && toast.add({ title: data.message });
       },
     },
   ],

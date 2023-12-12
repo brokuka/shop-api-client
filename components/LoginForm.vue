@@ -49,19 +49,16 @@ const onSubmit = async (event: LoginSchemaType) => {
 
   const { email, password } = event.data;
 
-  const { data, error } = await authStore.login({ email, password });
-
-  if (error.value?.data.message) {
-    loginErrorMessage.value = error.value.data.message;
-  }
-
-  if (data.value) {
-    toast.add({ title: 'Авторизация прошла успешна' });
-
-    modalStore.closeAuthModal();
-  }
+  const { login, error } = await authStore.login({ email, password });
 
   isLoading.value = false;
+
+  if (error.value?.data.message) {
+    return (loginErrorMessage.value = error.value.data.message);
+  }
+
+  login.value?.message && toast.add({ title: login.value.message });
+  modalStore.closeAuthModal();
 };
 
 const onError = (event: FormErrorEvent) => {

@@ -61,17 +61,18 @@ const onSubmit = async (event: RegisterSchemaType) => {
 
   const { email, password } = event.data;
 
-  const { error } = await authStore.register({ email, password });
-
-  if (error.value?.data.message) {
-    registerErrorMessage.value = error.value.data.message;
-    form.value.setErrors([{ path: 'email', message: ' ' }]);
-  } else {
-    toast.add({ title: 'Регистрация прошла успешна' });
-    modalStore.switchAuthModalScreen();
-  }
+  const { data: register, error } = await authStore.register({ email, password });
 
   isLoading.value = false;
+
+  if (error.value?.data.message) {
+    registerErrorMessage.value = error.value?.data.message;
+
+    return form.value.setErrors([{ path: 'email', message: ' ' }]);
+  }
+
+  register.value?.message && toast.add({ title: register.value.message });
+  modalStore.switchAuthModalScreen();
 };
 
 const onError = (event: FormErrorEvent) => {

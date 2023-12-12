@@ -21,10 +21,12 @@ type RequestMethod =
 export const useAuthFetch: typeof useFetch = (url, options) => {
   const userStore = useUserStore();
   const session = useSessionStorage<string>('session', null);
+  const headers = useRequestHeaders();
 
   return useDefaultFetch(url, {
     credentials: 'include',
     headers: {
+      ...headers,
       ...options?.headers,
       ...(session.value && { authorization: `Bearer ${session.value}` }),
     },
@@ -44,12 +46,14 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
         });
       }
 
-      await $fetch(request, {
-        method: options.method as RequestMethod,
-        body: options.body,
-        credentials: options.credentials,
-        headers: options.headers,
-      });
+      if (response.status === 401) {
+        await $fetch(request, {
+          method: options.method as RequestMethod,
+          body: options.body,
+          credentials: options.credentials,
+          headers: options.headers,
+        });
+      }
     },
   });
 };

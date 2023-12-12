@@ -1,4 +1,4 @@
-import type { Product } from '~/utils/types';
+import type { Product, ApiResponse } from '~/utils/types';
 
 export type CartItem = {
   quantity: number;
@@ -35,24 +35,19 @@ export const useCartStore = defineStore('cart', () => {
   const isLoading = computed(() => status.value === 'loading');
 
   const fetchCart = async () => {
-    const { data: cart } = await useAuthFetch<CartResoponse>('/cart');
+    const { data: cart } = await useAuthFetch<ApiResponse<CartResoponse>>('/cart');
 
-    if (cart.value) {
-      items.value = cart.value.items;
+    if (cart.value?.data?.items) {
+      items.value = cart.value.data.items;
+
       status.value = 'loaded';
     }
   };
 
-  const addToCart = async (product: Product) => {
+  const addToCart = async (product: Product, quantity: number = 1) => {
     const { product_id } = product;
 
-    const existingProduct = items.value?.find((item) => item.product_id === product.product_id);
-
-    if (!items.value) {
-      return (items.value = [{ ...product, quantity: 1 }]);
-    }
-
-    items.value = [...items.value, { ...product, quantity: 1 }];
+    items.value = [...(items.value || []), { ...product, quantity }];
 
     if (authStore.isAuthenticated) {
       await useAuthFetch('/cart', {
@@ -60,7 +55,7 @@ export const useCartStore = defineStore('cart', () => {
         body: {
           user_id: userStore.user?.user_id,
           product_id,
-          quantity: existingProduct?.quantity ?? 1,
+          quantity,
         },
       });
     }

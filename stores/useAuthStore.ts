@@ -1,4 +1,4 @@
-import type { User } from '#imports';
+import type { User, ApiResponse } from '#imports';
 
 export type MessageResponse = {
   message: string;
@@ -21,24 +21,24 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = ref(false);
 
   const login = async (body: AuthBody) => {
-    const { data, ...etc } = await useAuthFetch<User, ErrorPayload>('/auth/login', {
+    const { data: login, ...etc } = await useAuthFetch<ApiResponse<User>, ErrorPayload>('/auth/login', {
       method: 'POST',
       body,
     });
 
-    if (data.value) {
+    if (login.value) {
       isAuthenticated.value = true;
-      userStore.user = data.value;
+      userStore.user = login.value.data;
       cartStore.fetchCart();
 
-      session.value = data.value.session;
+      session.value = login.value.data?.session;
     }
 
-    return { data, ...etc };
+    return { login, ...etc };
   };
 
   const register = async (body: AuthBody) => {
-    return await useAuthFetch<MessageResponse, ErrorPayload>('/auth/register', {
+    return await useAuthFetch<ApiResponse, ErrorPayload>('/auth/register', {
       method: 'POST',
       body,
     });
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     navigateTo('/', { replace: true });
 
-    const { data } = await useAuthFetch<MessageResponse>('/auth/logout', {
+    const { data } = await useAuthFetch<ApiResponse>('/auth/logout', {
       method: 'POST',
       body: {
         user_id: userStore.user?.user_id,

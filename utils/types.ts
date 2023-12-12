@@ -33,9 +33,9 @@ export type OrderItem = {
   product: Product & { quantity: number };
 };
 
-export type ApiResponse<T> = {
-  data: T;
-  message?: string;
+export type ApiResponse<T = void> = {
+  data: Nullable<T>;
+  message: Nullable<string>;
 };
 
 export type ApiErrorResponse = {

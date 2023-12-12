@@ -1,4 +1,4 @@
-import type { User } from '~/utils/types';
+import type { User, ApiResponse } from '#imports';
 import type { ErrorPayload } from './useAuthStore';
 
 export const useUserStore = defineStore('user', () => {
@@ -7,11 +7,11 @@ export const useUserStore = defineStore('user', () => {
   const session = useSessionStorage<string>('session', null);
 
   const fetchUser = async () => {
-    const { data } = await useAuthFetch<User, ErrorPayload>('/user');
+    const { data: userData } = await useAuthFetch<ApiResponse<User>, ErrorPayload>('/user');
 
-    if (data.value) {
+    if (userData.value) {
       authStore.isAuthenticated = true;
-      user.value = data.value;
+      user.value = userData.value.data;
     }
   };
 
