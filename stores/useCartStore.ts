@@ -21,6 +21,7 @@ export type CartStatus = 'idle' | 'loading' | 'loaded';
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore();
   const userStore = useUserStore();
+  const localStorage = useLocalStorage<CartItem[]>('cart_entities', [], { writeDefaults: false });
 
   const items = ref<Nullable<CartItem[]>>(null);
   const status = ref<CartStatus>('idle');
@@ -34,13 +35,29 @@ export const useCartStore = defineStore('cart', () => {
   });
   const isLoading = computed(() => status.value === 'loading');
 
+  /* Подход с SSR */
   const fetchCart = async () => {
     const { data: cart } = await useAuthFetch<ApiResponse<CartResoponse>>('/cart');
 
-    if (cart.value?.data?.items) {
-      items.value = cart.value.data.items;
+    if (!cart.value?.data?.items) return;
 
+    items.value = cart.value.data.items;
+    status.value = 'loaded';
+  };
+
+  /* Подход с CSR */
+  const initCart = () => {
+    status.value = 'loading';
+
+    if (localStorage.value.length) {
       status.value = 'loaded';
+      items.value = localStorage.value;
+      return;
+    }
+
+    if (!items.value) {
+      status.value = 'idle';
+      return;
     }
   };
 
@@ -48,6 +65,7 @@ export const useCartStore = defineStore('cart', () => {
     const { product_id } = product;
 
     items.value = [...(items.value || []), { ...product, quantity }];
+    localStorage.value = items.value;
 
     if (authStore.isAuthenticated) {
       await useAuthFetch('/cart', {
@@ -65,6 +83,7 @@ export const useCartStore = defineStore('cart', () => {
     if (!items.value) return;
 
     items.value = items.value.filter((item) => item.product_id !== product_id);
+    localStorage.value = items.value;
 
     if (authStore.isAuthenticated) {
       return await useAuthFetch(`/cart/${product_id}`, {
@@ -73,6 +92,11 @@ export const useCartStore = defineStore('cart', () => {
           user_id: userStore.user?.user_id,
         },
       });
+    }
+
+    if (!items.value.length) {
+      items.value = null;
+      status.value = 'idle';
     }
   };
 
@@ -124,6 +148,7 @@ export const useCartStore = defineStore('cart', () => {
     fetchCart,
     changeStatus,
     clearCart,
+    initCart,
   };
 });
 

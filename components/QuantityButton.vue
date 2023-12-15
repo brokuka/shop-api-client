@@ -1,6 +1,12 @@
 <template>
   <ULink :class="twMerge(classes, wrapperClasses)" :to="to" class="relative" active-class="text-primary">
-    <UChip :show="isQuantityExist" :text="reachLimit" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
+    <ClientOnly>
+      <template #fallback>
+        <UChip :show="false" class="hidden" />
+      </template>
+
+      <UChip :show="isQuantityExist" :text="reachLimit" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
+    </ClientOnly>
 
     <Icon v-if="icon" :name="icon" size="20" />
 
@@ -37,6 +43,7 @@ defineOptions({
 const slot = useSlots();
 
 const isQuantityExist = computed(() => Boolean(props.quantity));
+
 const reachLimit = computed(() => {
   if (props.quantity && props.quantity > QUANTITY_LIMIT) {
     return `${QUANTITY_LIMIT}+`;

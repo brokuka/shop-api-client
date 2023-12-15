@@ -1,6 +1,6 @@
 <template>
-  <main class="flex-1 pb-[96px] pt-10 md:py-10">
-    <UContainer class="h-full">
+  <main class="overflow-y-auto">
+    <UContainer class="py-10">
       <slot />
     </UContainer>
   </main>

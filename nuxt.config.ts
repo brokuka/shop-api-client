@@ -4,6 +4,8 @@ export default defineNuxtConfig({
     rootId: 'app',
   },
 
+  components: [{ path: '~/components/skeleton', pathPrefix: false }, '~/components'],
+
   devtools: {
     enabled: true,
 

@@ -1,16 +1,18 @@
 <template>
-  <div class="grid gap-y-3">
-    <CartCard
-      v-for="item in items"
-      :key="item.product_id"
-      :category="item.category"
-      :description="item.description"
-      :price="item.price"
-      :product_id="item.product_id"
-      :image="item.image"
-      :title="item.title"
-      :quantity="item.quantity"
-    />
+  <div class="flex flex-col gap-2">
+    <div class="grid gap-y-3">
+      <CartCard
+        v-for="item in items"
+        :key="item.product_id"
+        :category="item.category"
+        :description="item.description"
+        :price="item.price"
+        :product_id="item.product_id"
+        :image="item.image"
+        :title="item.title"
+        :quantity="item.quantity"
+      />
+    </div>
   </div>
 </template>
 
@@ -18,6 +20,6 @@
 import type { CartItem } from '~/stores/useCartStore';
 
 defineProps<{
-  items: CartItem[];
+  items: Nullable<CartItem[]>;
 }>();
 </script>

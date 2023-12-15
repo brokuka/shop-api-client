@@ -1,12 +1,9 @@
 <template>
-  <div class="relative flex h-screen flex-col">
-    <Header />
+  <Header />
 
-    <Main>
-      <slot />
-    </Main>
+  <Main>
+    <slot />
+  </Main>
 
-    <Footer />
-    <MobileNavigation />
-  </div>
+  <Footer />
 </template>

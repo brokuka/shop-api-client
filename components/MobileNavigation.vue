@@ -3,18 +3,21 @@
     class="fixed bottom-0 left-0 right-0 z-[2] -mb-px border-t border-gray-200 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-900/70 md:hidden"
   >
     <div class="flex items-center justify-between">
-      <MobileNavigationItem
+      <QuantityButton
         v-for="item in NAVIGATION"
         :key="item.id"
         :to="item.href"
         :label="item.label"
-        :text="item.text"
+        :quantity="item.quantity"
+        variant="ghost"
+        wrapper-classes="p-4.5"
+        inset
       />
 
-      <MobileNavigationItem :to="navigateUserButton" @click="handleUserButton">
+      <QuantityButton variant="ghost" wrapper-classes="p-4.5" inset :to="navigateUserButton" @click="handleUserButton">
         <span v-if="!authStore.isAuthenticated">Вход</span>
         <span v-else>Профиль</span>
-      </MobileNavigationItem>
+      </QuantityButton>
     </div>
   </div>
 </template>
@@ -42,7 +45,7 @@ const NAVIGATION = computed(() => [
     id: 2,
     label: 'Корзина',
     href: '/cart',
-    text: cartStore.totalQuantity,
+    quantity: cartStore.totalQuantity,
   },
 ]);
 </script>

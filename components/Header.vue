@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-background/75 z-50 -mb-px border-b border-gray-200 backdrop-blur dark:border-gray-800">
+  <header class="bg-background/75 border-b border-gray-200 backdrop-blur dark:border-gray-800">
     <UContainer class="flex h-16 items-center justify-between">
       <ULink to="/" class="hover:text-primary p-4.5 text-lg font-medium" active-class="text-primary">SHOP-API</ULink>
 
