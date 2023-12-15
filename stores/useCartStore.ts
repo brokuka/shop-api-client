@@ -61,6 +61,14 @@ export const useCartStore = defineStore('cart', () => {
     }
   };
 
+  const removeCart = () => {
+    if (!localStorage.value.length) return;
+
+    items.value = null;
+    status.value = 'idle';
+    localStorage.value = undefined;
+  };
+
   const addToCart = async (product: Product, quantity: number = 1) => {
     const { product_id } = product;
 
@@ -149,6 +157,7 @@ export const useCartStore = defineStore('cart', () => {
     changeStatus,
     clearCart,
     initCart,
+    removeCart,
   };
 });
 
