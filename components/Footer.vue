@@ -1,5 +1,6 @@
 <template>
-  <footer class="bg-background/75 hidden border-t border-gray-200 backdrop-blur dark:border-gray-800 md:block">
+  <!-- bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -->
+  <footer class="z-[2] hidden border-t border-gray-200 dark:border-gray-800 md:block">
     <UContainer>
       <GithubButton />
     </UContainer>
