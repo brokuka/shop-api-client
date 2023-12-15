@@ -6,4 +6,5 @@
   </Main>
 
   <Footer />
+  <MobileNavigation />
 </template>

@@ -1,6 +1,6 @@
 <template>
   <main class="overflow-y-auto">
-    <UContainer class="py-10">
+    <UContainer class="py-6 md:py-10">
       <slot />
     </UContainer>
   </main>
