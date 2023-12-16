@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components/skeleton', pathPrefix: false },
     { path: '~/components/cart', pathPrefix: false },
+    { path: '~/components/layout', pathPrefix: false },
     '~/components',
   ],
 
