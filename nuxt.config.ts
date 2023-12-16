@@ -4,7 +4,17 @@ export default defineNuxtConfig({
     rootId: 'app',
   },
 
-  components: [{ path: '~/components/skeleton', pathPrefix: false }, '~/components'],
+  routeRules: {
+    '/cart/**': {
+      prerender: true,
+    },
+  },
+
+  components: [
+    { path: '~/components/skeleton', pathPrefix: false },
+    { path: '~/components/cart', pathPrefix: false },
+    '~/components',
+  ],
 
   devtools: {
     enabled: true,

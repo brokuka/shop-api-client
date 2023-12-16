@@ -2,9 +2,7 @@
   <Header />
 
   <Main>
-    <UContainer class="py-6 md:py-10">
-      <slot />
-    </UContainer>
+    <slot />
   </Main>
 
   <Footer />

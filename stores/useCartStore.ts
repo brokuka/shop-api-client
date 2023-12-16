@@ -94,7 +94,7 @@ export const useCartStore = defineStore('cart', () => {
     localStorage.value = items.value;
 
     if (authStore.isAuthenticated) {
-      return await useAuthFetch(`/cart/${product_id}`, {
+      await useAuthFetch(`/cart/${product_id}`, {
         method: 'DELETE',
         body: {
           user_id: userStore.user?.user_id,
