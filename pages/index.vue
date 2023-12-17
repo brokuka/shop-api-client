@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="h-full">
+  <UContainer class="root-container h-full">
     <MainHero />
   </UContainer>
 </template>
