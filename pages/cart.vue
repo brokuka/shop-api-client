@@ -3,7 +3,7 @@
     <template #fallback>
       <CartContainer>
         <div class="space-y-3 lg:col-span-2">
-          <CartCardSkeleton v-for="item in createArray(4)" :key="item" />
+          <CartCardSkeleton v-for="item in createArray(SKELETON_ITEMS_COUNT)" :key="item" />
         </div>
 
         <CartSummarySkeleton />
@@ -21,6 +21,8 @@
 
 <script setup lang="ts">
 const cartStore = useCartStore();
+
+const SKELETON_ITEMS_COUNT = 4;
 
 definePageMeta({
   layout: 'without-container',

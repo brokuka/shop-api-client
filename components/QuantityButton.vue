@@ -2,10 +2,18 @@
   <ULink :class="twMerge(classes, wrapperClasses)" :to="to" class="relative" active-class="text-primary">
     <ClientOnly>
       <template #fallback>
-        <UChip :show="false" class="hidden" />
+        <UChip :show="false" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
       </template>
 
-      <UChip :show="isQuantityExist" :text="reachLimit" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
+      <template #default>
+        <UChip
+          :show="Boolean(quantity)"
+          :text="reachLimit"
+          size="2xl"
+          :inset="inset"
+          class="absolute right-0 top-0.5"
+        />
+      </template>
     </ClientOnly>
 
     <Icon v-if="icon" :name="icon" size="20" />
@@ -26,6 +34,8 @@ const QUANTITY_LIMIT = 99;
 import type { ButtonVariant } from '@nuxt/ui/dist/runtime/types';
 import { twMerge } from 'tailwind-merge';
 
+const slot = useSlots();
+
 const props = defineProps<{
   variant: ButtonVariant;
   quantity?: number;
@@ -40,16 +50,10 @@ defineOptions({
   inheritAttrs: true,
 });
 
-const slot = useSlots();
-
-const isQuantityExist = computed(() => Boolean(props.quantity));
-
 const reachLimit = computed(() => {
-  if (props.quantity && props.quantity > QUANTITY_LIMIT) {
-    return `${QUANTITY_LIMIT}+`;
-  }
+  if (!props.quantity) return;
 
-  return props.quantity;
+  return props.quantity > QUANTITY_LIMIT ? `${QUANTITY_LIMIT}+` : props.quantity;
 });
 
 const classes =
