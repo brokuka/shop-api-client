@@ -1,7 +1,7 @@
 <template>
   <Header />
 
-  <Main container-class="h-full">
+  <Main>
     <slot />
   </Main>
 

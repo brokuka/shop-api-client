@@ -2,7 +2,7 @@
   <Header />
 
   <Main>
-    <UContainer class="py-6 md:py-10">
+    <UContainer class="pb-20 pt-6 md:py-10">
       <slot />
     </UContainer>
   </Main>

@@ -1,9 +1,11 @@
 <template>
-  <MainHero />
+  <UContainer class="h-full">
+    <MainHero />
+  </UContainer>
 </template>
 
 <script setup>
 definePageMeta({
-  layout: 'main',
+  layout: 'without-container',
 });
 </script>
