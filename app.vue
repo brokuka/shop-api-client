@@ -25,6 +25,10 @@ body {
   @apply relative grid h-screen grid-rows-[auto,_1fr,_auto] overflow-hidden;
 }
 
+.root-container {
+  @apply pb-20 pt-6 md:py-10;
+}
+
 .product-card:nth-child(2) {
   flex: 1;
 }

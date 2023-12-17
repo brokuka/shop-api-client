@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="py-6 md:py-10">
+  <UContainer class="root-container">
     <div
       class="grid h-full grid-cols-none gap-3 lg:grid-cols-3"
       :class="{ 'relative grid grid-cols-none gap-3 lg:grid-cols-3': isCartValidLoading }"

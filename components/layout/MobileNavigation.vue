@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900/70 md:hidden"
+    class="fixed bottom-0 left-0 right-0 z-[2] border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-black/70 md:hidden"
   >
     <div class="flex items-center justify-between">
       <QuantityButton
