@@ -1,3 +1,62 @@
+<script setup lang="ts">
+import type { User } from '~/utils/types'
+
+const userStore = useUserStore()
+const toast = useToast()
+const windowSize = useWindowSize()
+
+const state = reactive({
+  name: userStore.user?.name ?? '',
+  surname: userStore.user?.surname ?? '',
+  middlename: userStore.user?.middlename ?? '',
+})
+
+const isDirty = computed(() => {
+  let key: Keys<typeof state>
+
+  for (key in state) {
+    if (state[key] !== userStore.user?.[key])
+      return true
+  }
+
+  return false
+})
+const isTablet = computed(() => windowSize.width.value >= 768)
+
+const isLoading = ref(false)
+
+interface UpdateProfileDataResponse {
+  user: User
+  message: string
+}
+
+async function onSubmit(event: UpdateProfileDataSchemaType) {
+  isLoading.value = true
+
+  const { data } = await useAuthFetch<UpdateProfileDataResponse>('/user', {
+    method: 'PATCH',
+    body: {
+      user_id: userStore.user?.user_id,
+      ...event.data,
+    },
+  })
+
+  if (data.value) {
+    userStore.user = data.value.user
+    toast.add({ title: data.value.message })
+  }
+
+  isLoading.value = false
+}
+
+const tooltipConfig = {
+  wrapper: 'w-full',
+  width: '',
+}
+
+const saveButtonMessage = 'Чтобы сохранить, нужно изменить как минимум одно поле'
+</script>
+
 <template>
   <ProfileSectionHeader>Контактная информация</ProfileSectionHeader>
 
@@ -31,63 +90,3 @@
     </UTooltip>
   </UForm>
 </template>
-
-<script setup lang="ts">
-import type { User } from '~/utils/types';
-
-const userStore = useUserStore();
-const toast = useToast();
-const windowSize = useWindowSize();
-
-const state = reactive({
-  name: userStore.user?.name ?? '',
-  surname: userStore.user?.surname ?? '',
-  middlename: userStore.user?.middlename ?? '',
-});
-
-const isDirty = computed(() => {
-  let key: Keys<typeof state>;
-
-  for (key in state) {
-    if (state[key] !== userStore.user?.[key]) {
-      return true;
-    }
-  }
-
-  return false;
-});
-const isTablet = computed(() => windowSize.width.value >= 768);
-
-const isLoading = ref(false);
-
-type UpdateProfileDataResponse = {
-  user: User;
-  message: string;
-};
-
-const onSubmit = async (event: UpdateProfileDataSchemaType) => {
-  isLoading.value = true;
-
-  const { data } = await useAuthFetch<UpdateProfileDataResponse>('/user', {
-    method: 'PATCH',
-    body: {
-      user_id: userStore.user?.user_id,
-      ...event.data,
-    },
-  });
-
-  if (data.value) {
-    userStore.user = data.value.user;
-    toast.add({ title: data.value.message });
-  }
-
-  isLoading.value = false;
-};
-
-const tooltipConfig = {
-  wrapper: 'w-full',
-  width: '',
-};
-
-const saveButtonMessage = 'Чтобы сохранить, нужно изменить как минимум одно поле';
-</script>

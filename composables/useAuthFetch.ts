@@ -16,12 +16,12 @@ type RequestMethod =
   | 'put'
   | 'connect'
   | 'options'
-  | 'trace';
+  | 'trace'
 
 export const useAuthFetch: typeof useFetch = (url, options) => {
-  const userStore = useUserStore();
-  const session = useSessionStorage<string>('session', null);
-  const headers = useRequestHeaders();
+  const userStore = useUserStore()
+  const session = useSessionStorage<string>('session', null)
+  const headers = useRequestHeaders()
 
   return useDefaultFetch(url, {
     credentials: 'include',
@@ -43,7 +43,7 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
             user_id: userStore.user?.user_id,
           },
           credentials: 'include',
-        });
+        })
       }
 
       if (response.status === 401) {
@@ -52,8 +52,8 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
           body: options.body,
           credentials: options.credentials,
           headers: options.headers,
-        });
+        })
       }
     },
-  });
-};
+  })
+}

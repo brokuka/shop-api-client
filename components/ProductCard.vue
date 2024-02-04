@@ -1,3 +1,43 @@
+<script setup lang="ts">
+import type { Product } from '~/utils/types'
+
+const { ...props } = defineProps<Product>()
+
+const windowSize = useWindowSize()
+
+const cartStore = useCartStore()
+
+const isTablet = computed(() => windowSize.width.value > 768)
+const product = computed(() => ({ ...props }))
+
+const cardConfig = {
+  base: '',
+  shadow: '',
+  ring: 'ring-0',
+  body: {
+    padding: 'py-3 sm:py-2 px-0 sm:px-0',
+  },
+  header: {
+    padding: '',
+  },
+}
+
+const tooltipConfig = {
+  base: 'h-fit text-clip',
+  container: 'z-[2]',
+}
+
+const buttonConfig = {
+  rounded: 'rounded-none rounded-b-lg',
+}
+
+const buttonSkeletonConfig = {
+  base: '',
+  rounded: 'rounded-none rounded-b-lg',
+  background: 'bg-gray-200',
+}
+</script>
+
 <template>
   <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: true, placement: 'bottom' }" :prevent="!isTablet">
     <div class="flex w-full flex-col rounded-lg shadow dark:bg-gray-900">
@@ -35,8 +75,9 @@
           block
           :ui="buttonConfig"
           @click="cartStore.addToCart(product)"
-          >{{ isTablet ? 'Добавить в корзину' : 'Добавить' }}</UButton
         >
+          {{ isTablet ? 'Добавить в корзину' : 'Добавить' }}
+        </UButton>
 
         <UButton v-else block :ui="buttonConfig" variant="outline" @click="navigateTo('/cart')">
           {{ isTablet ? 'Добавлен в корзину' : 'Добавлен' }}
@@ -51,43 +92,3 @@
     </div>
   </UTooltip>
 </template>
-
-<script setup lang="ts">
-import type { Product } from '~/utils/types';
-
-const { ...props } = defineProps<Product>();
-
-const windowSize = useWindowSize();
-
-const cartStore = useCartStore();
-
-const isTablet = computed(() => windowSize.width.value > 768);
-const product = computed(() => ({ ...props }));
-
-const cardConfig = {
-  base: '',
-  shadow: '',
-  ring: 'ring-0',
-  body: {
-    padding: 'py-3 sm:py-2 px-0 sm:px-0',
-  },
-  header: {
-    padding: '',
-  },
-};
-
-const tooltipConfig = {
-  base: 'h-fit text-clip',
-  container: 'z-[2]',
-};
-
-const buttonConfig = {
-  rounded: 'rounded-none rounded-b-lg',
-};
-
-const buttonSkeletonConfig = {
-  base: '',
-  rounded: 'rounded-none rounded-b-lg',
-  background: 'bg-gray-200',
-};
-</script>

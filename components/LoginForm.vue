@@ -1,3 +1,40 @@
+<script setup lang="ts">
+import type { FormErrorEvent } from '@nuxt/ui/dist/runtime/types'
+
+const authStore = useAuthStore()
+const modalStore = useModalStore()
+const toast = useToast()
+
+const loginErrorMessage = ref('')
+const isLoading = ref(false)
+
+const state = reactive({
+  email: undefined,
+  password: undefined,
+})
+
+async function onSubmit(event: LoginSchemaType) {
+  isLoading.value = true
+
+  const { email, password } = event.data
+
+  const { login, error } = await authStore.login({ email, password })
+
+  isLoading.value = false
+
+  if (error.value?.data.message)
+    return (loginErrorMessage.value = error.value.data.message)
+
+  login.value?.message && toast.add({ title: login.value.message })
+  modalStore.closeAuthModal()
+}
+
+function onError(event: FormErrorEvent) {
+  const element = document.getElementById(event.errors[0].id)
+  element?.focus()
+}
+</script>
+
 <template>
   <UAlert
     v-if="loginErrorMessage && !isLoading"
@@ -25,44 +62,8 @@
 
   <div class="flex flex-col items-center md:flex-row">
     <span class="text-sm">Ещё нет аккаунта ?</span>
-    <UButton variant="link" size="sm" @click="modalStore.switchAuthModalScreen">Зарегистрироваться!</UButton>
+    <UButton variant="link" size="sm" @click="modalStore.switchAuthModalScreen">
+      Зарегистрироваться!
+    </UButton>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { FormErrorEvent } from '@nuxt/ui/dist/runtime/types';
-
-const authStore = useAuthStore();
-const modalStore = useModalStore();
-const toast = useToast();
-
-const loginErrorMessage = ref('');
-const isLoading = ref(false);
-
-const state = reactive({
-  email: undefined,
-  password: undefined,
-});
-
-const onSubmit = async (event: LoginSchemaType) => {
-  isLoading.value = true;
-
-  const { email, password } = event.data;
-
-  const { login, error } = await authStore.login({ email, password });
-
-  isLoading.value = false;
-
-  if (error.value?.data.message) {
-    return (loginErrorMessage.value = error.value.data.message);
-  }
-
-  login.value?.message && toast.add({ title: login.value.message });
-  modalStore.closeAuthModal();
-};
-
-const onError = (event: FormErrorEvent) => {
-  const element = document.getElementById(event.errors[0].id);
-  element?.focus();
-};
-</script>

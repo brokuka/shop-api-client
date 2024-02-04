@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const cartStore = useCartStore()
+
+const SKELETON_ITEMS_COUNT = 4
+
+definePageMeta({
+  layout: 'without-container',
+})
+</script>
+
 <template>
   <ClientOnly>
     <template #fallback>
@@ -18,13 +28,3 @@
     <Result v-else title="Корзина пуста 😳" class="grid h-full place-items-center" />
   </ClientOnly>
 </template>
-
-<script setup lang="ts">
-const cartStore = useCartStore();
-
-const SKELETON_ITEMS_COUNT = 4;
-
-definePageMeta({
-  layout: 'without-container',
-});
-</script>

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+defineProps<{
+  label: string
+  value: string | number
+}>()
+</script>
+
 <template>
   <div class="flex">
     <span
@@ -9,10 +16,3 @@
     <span class="pl-1.5 font-medium">{{ value }}</span>
   </div>
 </template>
-
-<script setup lang="ts">
-defineProps<{
-  label: string;
-  value: string | number;
-}>();
-</script>

@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { CartItem } from '~/stores/useCartStore'
+
+defineProps<{
+  items: Nullable<CartItem[]>
+}>()
+</script>
+
 <template>
   <div class="flex flex-col gap-2">
     <div class="grid gap-y-3">
@@ -15,11 +23,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { CartItem } from '~/stores/useCartStore';
-
-defineProps<{
-  items: Nullable<CartItem[]>;
-}>();
-</script>

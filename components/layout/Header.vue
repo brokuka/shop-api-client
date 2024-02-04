@@ -1,7 +1,18 @@
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: true,
+})
+const modalStore = useModalStore()
+const authStore = useAuthStore()
+const cartStore = useCartStore()
+</script>
+
 <template>
   <header class="z-[2] border-b border-gray-200 dark:border-gray-800">
     <UContainer class="flex h-16 items-center justify-between">
-      <ULink to="/" class="hover:text-primary p-4.5 text-lg font-medium" active-class="text-primary">SHOP-API</ULink>
+      <ULink to="/" class="hover:text-primary p-4.5 text-lg font-medium" active-class="text-primary">
+        SHOP-API
+      </ULink>
 
       <NavigationLinks class="hidden md:block" />
 
@@ -14,8 +25,9 @@
           variant="ghost"
           color="gray"
           @click="modalStore.showAuthModal"
-          >Войти</UButton
         >
+          Войти
+        </UButton>
 
         <HeaderProfile v-else />
       </div>
@@ -24,13 +36,3 @@
     </UContainer>
   </header>
 </template>
-
-<script setup lang="ts">
-const modalStore = useModalStore();
-const authStore = useAuthStore();
-const cartStore = useCartStore();
-
-defineOptions({
-  inheritAttrs: true,
-});
-</script>

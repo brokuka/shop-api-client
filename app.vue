@@ -1,3 +1,10 @@
+<script setup lang="ts">
+const modalStore = useModalStore()
+const cartStore = useCartStore()
+
+cartStore.initCart()
+</script>
+
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator />
@@ -7,13 +14,6 @@
   <AuthModal :opened="modalStore.authModal.opened" @close="modalStore.closeAuthModal" />
   <UNotifications />
 </template>
-
-<script setup lang="ts">
-const modalStore = useModalStore();
-const cartStore = useCartStore();
-
-cartStore.initCart();
-</script>
 
 <style>
 html,

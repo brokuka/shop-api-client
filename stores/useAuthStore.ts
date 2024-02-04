@@ -1,71 +1,72 @@
-import type { User, ApiResponse } from '#imports';
+import type { ApiResponse, User } from '#imports'
 
-export type MessageResponse = {
-  message: string;
-};
+export interface MessageResponse {
+  message: string
+}
 
-export type AuthBody = {
-  email: string;
-  password: string;
-};
+export interface AuthBody {
+  email: string
+  password: string
+}
 
-export type ErrorPayload = {
-  data: MessageResponse;
-};
+export interface ErrorPayload {
+  data: MessageResponse
+}
 
 export const useAuthStore = defineStore('auth', () => {
-  const userStore = useUserStore();
-  const cartStore = useCartStore();
-  const session = useSessionStorage<string>('session', null);
+  const userStore = useUserStore()
+  const cartStore = useCartStore()
+  const session = useSessionStorage<string>('session', null)
 
-  const isAuthenticated = ref(false);
+  const isAuthenticated = ref(false)
 
   const login = async (body: AuthBody) => {
     const { data: login, ...etc } = await useAuthFetch<ApiResponse<User>, ErrorPayload>('/auth/login', {
       method: 'POST',
       body,
-    });
+    })
 
     if (login.value) {
-      isAuthenticated.value = true;
-      userStore.user = login.value.data;
-      cartStore.fetchCart();
+      isAuthenticated.value = true
+      userStore.user = login.value.data
+      cartStore.fetchCart()
 
-      session.value = login.value.data?.session;
+      session.value = login.value.data?.session
 
       /* TODO: исправить когда будет полноценная система с корзиной */
-      cartStore.removeCart();
+      cartStore.removeCart()
     }
 
-    return { login, ...etc };
-  };
+    return { login, ...etc }
+  }
 
   const register = async (body: AuthBody) => {
     return await useAuthFetch<ApiResponse, ErrorPayload>('/auth/register', {
       method: 'POST',
       body,
-    });
-  };
+    })
+  }
 
   const logout = async () => {
-    isAuthenticated.value = false;
+    isAuthenticated.value = false
 
-    navigateTo('/', { replace: true });
+    navigateTo('/', { replace: true })
 
     const { data } = await useAuthFetch<ApiResponse>('/auth/logout', {
       method: 'POST',
       body: {
         user_id: userStore.user?.user_id,
       },
-    });
+    })
 
-    if (!data.value) return;
+    if (!data.value)
+      return
 
-    cartStore.clearCart();
-    userStore.clearUser();
+    cartStore.clearCart()
+    userStore.clearUser()
 
-    return data.value;
-  };
+    return data.value
+  }
 
   const refresh = async () => {
     await useAuthFetch('/auth/refresh', {
@@ -75,12 +76,11 @@ export const useAuthStore = defineStore('auth', () => {
       body: {
         user_id: userStore.user?.user_id,
       },
-    });
-  };
+    })
+  }
 
-  return { isAuthenticated, login, register, logout, refresh };
-});
+  return { isAuthenticated, login, register, logout, refresh }
+})
 
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot));
-}
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useAuthStore, import.meta.hot))

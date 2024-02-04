@@ -5,5 +5,5 @@ export const useDefaultFetch: typeof useFetch = (request, opts) => {
       ...opts?.headers,
     },
     ...opts,
-  });
-};
+  })
+}

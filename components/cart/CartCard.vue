@@ -1,3 +1,27 @@
+<script setup lang="ts">
+import type { CartItem } from '~/stores/useCartStore'
+
+const props = defineProps<CartItem>()
+const cartStore = useCartStore()
+const windowSize = useWindowSize()
+
+const { quantity } = toRefs(props)
+
+const isTablet = computed(() => windowSize.width.value > 768)
+
+function onAmountChange(value: number) {
+  cartStore.changeProductCount(props.product_id, value)
+}
+
+function onAmountIncrease() {
+  cartStore.changeProductCount(props.product_id, quantity.value + 1)
+}
+
+function onAmountDecrease() {
+  cartStore.changeProductCount(props.product_id, quantity.value - 1)
+}
+</script>
+
 <template>
   <div
     class="flex h-fit flex-col space-y-5 rounded-lg bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-gray-800 md:space-x-4"
@@ -23,12 +47,16 @@
               }}</span>
             </NuxtLink>
 
-            <UBadge class="hidden h-fit w-fit whitespace-nowrap sm:block" variant="solid" color="gray">{{
-              category
-            }}</UBadge>
+            <UBadge class="hidden h-fit w-fit whitespace-nowrap sm:block" variant="solid" color="gray">
+              {{
+                category
+              }}
+            </UBadge>
           </div>
 
-          <p v-if="description" class="hidden text-sm sm:block">{{ description }}</p>
+          <p v-if="description" class="hidden text-sm sm:block">
+            {{ description }}
+          </p>
         </div>
 
         <div class="hidden sm:flex">
@@ -57,11 +85,15 @@
     </div>
 
     <div class="flex sm:hidden">
-      <UBadge class="whitespace-nowrap" variant="solid" color="gray">{{ category }}</UBadge>
+      <UBadge class="whitespace-nowrap" variant="solid" color="gray">
+        {{ category }}
+      </UBadge>
     </div>
 
     <div v-if="description" class="block max-h-[100px] overflow-y-auto text-sm sm:hidden">
-      <p class="text-sm">{{ description }}</p>
+      <p class="text-sm">
+        {{ description }}
+      </p>
     </div>
 
     <div class="flex sm:hidden">
@@ -78,28 +110,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { CartItem } from '~/stores/useCartStore';
-
-const cartStore = useCartStore();
-const windowSize = useWindowSize();
-
-const props = defineProps<CartItem>();
-
-const { quantity } = toRefs(props);
-
-const isTablet = computed(() => windowSize.width.value > 768);
-
-const onAmountChange = (value: number) => {
-  cartStore.changeProductCount(props.product_id, value);
-};
-
-const onAmountIncrease = () => {
-  cartStore.changeProductCount(props.product_id, quantity.value + 1);
-};
-
-const onAmountDecrease = () => {
-  cartStore.changeProductCount(props.product_id, quantity.value - 1);
-};
-</script>

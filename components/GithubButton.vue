@@ -6,7 +6,8 @@
       color="gray"
       size="lg"
       @click="navigateTo('https://github.com/brokuka', { external: true, open: { target: '_blank' } })"
-      >@brokuka</UButton
     >
+      @brokuka
+    </UButton>
   </div>
 </template>

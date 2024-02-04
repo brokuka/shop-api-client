@@ -1,79 +1,79 @@
-import type { Product, ApiResponse } from '~/utils/types';
+import type { ApiResponse, Product } from '~/utils/types'
 
 export type CartItem = {
-  quantity: number;
-  cart_item_id?: number;
-} & Product;
+  quantity: number
+  cart_item_id?: number
+} & Product
 
-export type CartResoponse = {
-  cart_id: number;
-  user_id: number;
-  date: string;
+export interface CartResoponse {
+  cart_id: number
+  user_id: number
+  date: string
   items: ({
-    cart_item_id: number;
-  } & CartItem)[];
-  total_price: number;
-  total_quantity: number;
-};
+    cart_item_id: number
+  } & CartItem)[]
+  total_price: number
+  total_quantity: number
+}
 
-export type CartStatus = 'idle' | 'loading' | 'loaded';
+export type CartStatus = 'idle' | 'loading' | 'loaded'
 
 export const useCartStore = defineStore('cart', () => {
-  const authStore = useAuthStore();
-  const userStore = useUserStore();
-  const localStorage = useLocalStorage<CartItem[]>('cart_entities', [], { writeDefaults: false });
+  const authStore = useAuthStore()
+  const userStore = useUserStore()
+  const localStorage = useLocalStorage<CartItem[]>('cart_entities', [], { writeDefaults: false })
 
-  const items = ref<Nullable<CartItem[]>>(null);
-  const status = ref<CartStatus>('idle');
+  const items = ref<Nullable<CartItem[]>>(null)
+  const status = ref<CartStatus>('idle')
 
-  const totalQuantity = computed(() => items.value?.reduce((acc, item) => acc + item.quantity, 0));
-  const totalPrice = computed(() => items.value?.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2));
+  const totalQuantity = computed(() => items.value?.reduce((acc, item) => acc + item.quantity, 0))
+  const totalPrice = computed(() => items.value?.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2))
   const isInCart = computed(() => (product_id: number) => {
-    const existingProduct = items.value?.find((item) => item.product_id === product_id);
+    const existingProduct = items.value?.find(item => item.product_id === product_id)
 
-    return Boolean(existingProduct);
-  });
-  const isLoading = computed(() => status.value === 'loading');
+    return Boolean(existingProduct)
+  })
+  const isLoading = computed(() => status.value === 'loading')
 
   /* Подход с SSR */
   const fetchCart = async () => {
-    const { data: cart } = await useAuthFetch<ApiResponse<CartResoponse>>('/cart');
+    const { data: cart } = await useAuthFetch<ApiResponse<CartResoponse>>('/cart')
 
-    if (!cart.value?.data?.items) return;
+    if (!cart.value?.data?.items)
+      return
 
-    items.value = cart.value.data.items;
-    status.value = 'loaded';
-  };
+    items.value = cart.value.data.items
+    status.value = 'loaded'
+  }
 
   /* Подход с CSR */
   const initCart = () => {
-    status.value = 'loading';
+    status.value = 'loading'
 
     if (localStorage.value.length) {
-      status.value = 'loaded';
-      items.value = localStorage.value;
-      return;
+      status.value = 'loaded'
+      items.value = localStorage.value
+      return
     }
 
-    if (!items.value) {
-      status.value = 'idle';
-      return;
-    }
-  };
+    if (!items.value)
+      status.value = 'idle'
+  }
 
   const removeCart = () => {
-    if (!localStorage.value.length) return;
+    if (!localStorage.value.length)
+      return
 
-    items.value = null;
-    status.value = 'idle';
-    localStorage.value = undefined;
-  };
+    items.value = null
+    status.value = 'idle'
+    localStorage.value = undefined
+  }
 
   const addToCart = async (product: Product, quantity: number = 1) => {
-    const { product_id } = product;
+    const { product_id } = product
 
-    items.value = [...(items.value || []), { ...product, quantity }];
-    localStorage.value = items.value;
+    items.value = [...(items.value || []), { ...product, quantity }]
+    localStorage.value = items.value
 
     if (authStore.isAuthenticated) {
       await useAuthFetch('/cart', {
@@ -83,15 +83,16 @@ export const useCartStore = defineStore('cart', () => {
           product_id,
           quantity,
         },
-      });
+      })
     }
-  };
+  }
 
   const removeFromCart = async (product_id: number) => {
-    if (!items.value) return;
+    if (!items.value)
+      return
 
-    items.value = items.value.filter((item) => item.product_id !== product_id);
-    localStorage.value = items.value;
+    items.value = items.value.filter(item => item.product_id !== product_id)
+    localStorage.value = items.value
 
     if (authStore.isAuthenticated) {
       await useAuthFetch(`/cart/${product_id}`, {
@@ -99,29 +100,17 @@ export const useCartStore = defineStore('cart', () => {
         body: {
           user_id: userStore.user?.user_id,
         },
-      });
+      })
     }
 
     if (!items.value.length) {
-      items.value = null;
-      status.value = 'idle';
+      items.value = null
+      status.value = 'idle'
     }
-  };
-
-  const changeProductCount = (product_id: number, quantity: number) => {
-    const existingProduct = items.value?.find((item) => item.product_id === product_id);
-
-    if (!existingProduct) return;
-
-    existingProduct.quantity = quantity;
-
-    if (authStore.isAuthenticated) {
-      fetchChangeProductCount(existingProduct);
-    }
-  };
+  }
 
   const fetchChangeProductCount = useDebounceFn(async (existingProduct: CartItem) => {
-    status.value = 'loading';
+    status.value = 'loading'
 
     await useAuthFetch('/cart/update', {
       method: 'POST',
@@ -130,18 +119,30 @@ export const useCartStore = defineStore('cart', () => {
         product_id: existingProduct.product_id,
         quantity: existingProduct.quantity,
       },
-    });
+    })
 
-    status.value = 'loaded';
-  }, 1000);
+    status.value = 'loaded'
+  }, 1000)
+
+  const changeProductCount = (product_id: number, quantity: number) => {
+    const existingProduct = items.value?.find(item => item.product_id === product_id)
+
+    if (!existingProduct)
+      return
+
+    existingProduct.quantity = quantity
+
+    if (authStore.isAuthenticated)
+      fetchChangeProductCount(existingProduct)
+  }
 
   const changeStatus = (to: CartStatus) => {
-    status.value = to;
-  };
+    status.value = to
+  }
 
   const clearCart = () => {
-    items.value = null;
-  };
+    items.value = null
+  }
 
   return {
     items,
@@ -158,9 +159,8 @@ export const useCartStore = defineStore('cart', () => {
     clearCart,
     initCart,
     removeCart,
-  };
-});
+  }
+})
 
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot));
-}
+if (import.meta.hot)
+  import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot))

@@ -1,7 +1,9 @@
-<template>
-  <UButton @click="userStore.fetchUser">Запросить юзера</UButton>
-</template>
-
 <script setup lang="ts">
-const userStore = useUserStore();
+const userStore = useUserStore()
 </script>
+
+<template>
+  <UButton @click="userStore.fetchUser">
+    Запросить юзера
+  </UButton>
+</template>

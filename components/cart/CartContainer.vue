@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const cartStore = useCartStore()
+
+const isCartValidLoading = cartStore.isLoading && cartStore.items
+</script>
+
 <template>
   <UContainer class="root-container">
     <div
@@ -8,9 +14,3 @@
     </div>
   </UContainer>
 </template>
-
-<script setup lang="ts">
-const cartStore = useCartStore();
-
-const isCartValidLoading = cartStore.isLoading && cartStore.items;
-</script>

@@ -1,3 +1,30 @@
+<script setup lang="ts">
+const authStore = useAuthStore()
+const modalStore = useModalStore()
+const cartStore = useCartStore()
+
+function handleUserButton() {
+  if (!authStore.isAuthenticated)
+    return modalStore.showAuthModal()
+}
+
+const navigateUserButton = computed(() => (authStore.isAuthenticated ? '/profile' : undefined))
+
+const NAVIGATION = computed(() => [
+  {
+    id: 1,
+    label: 'Продукты',
+    href: '/products',
+  },
+  {
+    id: 2,
+    label: 'Корзина',
+    href: '/cart',
+    quantity: cartStore.totalQuantity,
+  },
+])
+</script>
+
 <template>
   <div
     class="fixed bottom-0 left-0 right-0 z-[2] border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-black/70 md:hidden"
@@ -21,31 +48,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const authStore = useAuthStore();
-const modalStore = useModalStore();
-const cartStore = useCartStore();
-
-const handleUserButton = () => {
-  if (!authStore.isAuthenticated) {
-    return modalStore.showAuthModal();
-  }
-};
-
-const navigateUserButton = computed(() => (authStore.isAuthenticated ? '/profile' : undefined));
-
-const NAVIGATION = computed(() => [
-  {
-    id: 1,
-    label: 'Продукты',
-    href: '/products',
-  },
-  {
-    id: 2,
-    label: 'Корзина',
-    href: '/cart',
-    quantity: cartStore.totalQuantity,
-  },
-]);
-</script>

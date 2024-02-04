@@ -1,3 +1,35 @@
+<script setup lang="ts">
+const props = defineProps<{
+  value: number
+}>()
+const emit = defineEmits<{
+  (e: 'change', value: number): void
+  (e: 'increase'): void
+  (e: 'decrease'): void
+}>()
+const cartStore = useCartStore()
+const windowSize = useWindowSize()
+
+const isDecreaseButtonDisabled = computed(() => props.value <= 1)
+const isTablet = computed(() => windowSize.width.value > 768)
+
+function onChange(e: Event) {
+  const target = e.target as HTMLInputElement
+
+  if (!target.value.length)
+    return
+
+  return emit('change', Number(target.value))
+}
+
+function onBlur(e: Event) {
+  const target = e.target as HTMLInputElement
+
+  if (!target.value)
+    target.value = `${props.value}`
+}
+</script>
+
 <template>
   <div class="flex space-x-2">
     <UTooltip
@@ -29,37 +61,3 @@
     </UTooltip>
   </div>
 </template>
-
-<script setup lang="ts">
-const cartStore = useCartStore();
-const windowSize = useWindowSize();
-
-const props = defineProps<{
-  value: number;
-}>();
-
-const emit = defineEmits<{
-  (e: 'change', value: number): void;
-  (e: 'increase'): void;
-  (e: 'decrease'): void;
-}>();
-
-const isDecreaseButtonDisabled = computed(() => props.value <= 1);
-const isTablet = computed(() => windowSize.width.value > 768);
-
-const onChange = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-
-  if (!target.value.length) return;
-
-  return emit('change', Number(target.value));
-};
-
-const onBlur = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-
-  if (!target.value) {
-    target.value = `${props.value}`;
-  }
-};
-</script>
