@@ -42,4 +42,4 @@ export default defineNuxtConfig({
       API_DOMAIN: process.env.API_DOMAIN,
     },
   },
-});
+})
