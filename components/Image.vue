@@ -3,7 +3,7 @@ import { useImage } from '@vueuse/core'
 
 interface Props {
   lazy?: boolean
-  title: string
+  title?: string
   width: number
   height: number
   imageSrc: string
@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   imageSrc: '',
   containerClass: '',
   lazy: true,
+  title: '',
 })
 
 const { isReady, error } = useImage({ src: props.imageSrc })
