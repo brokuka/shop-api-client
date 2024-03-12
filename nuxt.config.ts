@@ -4,6 +4,8 @@ export default defineNuxtConfig({
     rootId: 'app',
   },
 
+	ssr: false,
+
   routeRules: {
     '/cart/**': {
       prerender: true,
