@@ -1,6 +1,6 @@
 export const useDefaultFetch: typeof useFetch = (request, opts) => {
   return useFetch(request, {
-    baseURL: useRuntimeConfig().public.API_DOMAIN,
+    baseURL: '/api',
     headers: {
       ...opts?.headers,
     },

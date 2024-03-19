@@ -34,7 +34,7 @@ export const useAuthFetch: typeof useFetch = (url, options) => {
     onResponseError: async ({ response, request, options }) => {
       if (response.status === 401) {
         await $fetch('/auth/refresh', {
-          baseURL: useRuntimeConfig().public.API_DOMAIN,
+          baseURL: '/api',
           method: 'POST',
           headers: {
             ...(session.value && { authorization: `Bearer ${session.value}` }),

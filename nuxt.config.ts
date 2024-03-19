@@ -4,11 +4,14 @@ export default defineNuxtConfig({
     rootId: 'app',
   },
 
-	ssr: false,
-
   routeRules: {
     '/cart/**': {
       prerender: true,
+    },
+    '/api/**': {
+      proxy: {
+        to: `${process.env.API_DOMAIN}/api/**`,
+      },
     },
   },
 
