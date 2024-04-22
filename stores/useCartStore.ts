@@ -16,7 +16,7 @@ export interface CartResoponse {
   total_quantity: number
 }
 
-export type CartStatus = 'idle' | 'loading' | 'loaded'
+export type CartStatus = 'idle' | 'loading'
 
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore()
@@ -119,7 +119,7 @@ export const useCartStore = defineStore('cart', () => {
       },
     })
 
-    status.value = 'loaded'
+    status.value = 'idle'
   }, 1000)
 
   const changeProductCount = (product_id: number, quantity: number) => {

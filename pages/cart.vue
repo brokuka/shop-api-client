@@ -9,6 +9,8 @@ definePageMeta({
 })
 
 authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
+
+const isLoading = computed(() => cartStore.isLoading && authStore.isAuthenticated)
 </script>
 
 <template>
@@ -25,7 +27,7 @@ authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
 
     <CartContainer
       v-if="cartStore.items?.length" :class="{
-        'opacity-50 pointer-events-none': cartStore.isLoading,
+        'opacity-50 pointer-events-none': isLoading,
       }"
     >
       <CartList class="lg:col-span-2" :items="cartStore.items" />
@@ -38,27 +40,4 @@ authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
       </UButton>
     </Result>
   </ClientOnly>
-
-  <!-- <ClientOnly>
-    <CartContainer v-if="cartStore.isLoading">
-      <div class="space-y-3 lg:col-span-2">
-        <CartCardSkeleton v-for="order in SKELETON_ITEMS_COUNT" :key="order" />
-      </div>
-
-      <CartSummarySkeleton />
-    </CartContainer>
-
-    <template v-else>
-      <CartContainer v-if="cartStore.items?.length">
-        <CartList class="lg:col-span-2" :items="cartStore.items" />
-        <CartSummary />
-      </CartContainer>
-
-      <Result v-else title="Корзина пуста 😳" class="grid h-full place-items-center">
-        <UButton to="/products">
-          Перейти к каталогу
-        </UButton>
-      </Result>
-    </template>
-  </ClientOnly> -->
 </template>
