@@ -1,8 +1,4 @@
-<script lang="ts">
-</script>
-
 <script setup lang="ts">
-import type { ButtonVariant } from '@nuxt/ui/dist/runtime/types'
 import { twMerge } from 'tailwind-merge'
 
 defineOptions({
