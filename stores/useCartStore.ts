@@ -24,7 +24,7 @@ export const useCartStore = defineStore('cart', () => {
   const localStorage = useLocalStorage<CartItem[]>('cart_entities', [], { writeDefaults: false })
 
   const items = ref<Nullable<CartItem[]>>(null)
-  const status = ref<CartStatus>('idle')
+  const status = ref<CartStatus>('loading')
 
   const totalQuantity = computed(() => items.value?.reduce((acc, item) => acc + item.quantity, 0))
   const totalPrice = computed(() => items.value?.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2))
@@ -37,27 +37,24 @@ export const useCartStore = defineStore('cart', () => {
 
   /* Подход с SSR */
   const fetchCart = async () => {
+    status.value = 'loading'
     const { data: cart } = await useAuthFetch<ApiResponse<CartResoponse>>('/cart')
+
+    status.value = 'idle'
 
     if (!cart.value?.data?.items)
       return
 
     items.value = cart.value.data.items
-    status.value = 'loaded'
   }
 
   /* Подход с CSR */
   const initCart = () => {
-    status.value = 'loading'
+    const INTERVAL = 300
 
-    if (localStorage.value.length) {
-      status.value = 'loaded'
-      items.value = localStorage.value
-      return
-    }
+    items.value = localStorage.value
 
-    if (!items.value)
-      status.value = 'idle'
+    setTimeout(() => status.value = 'idle', INTERVAL)
   }
 
   const removeCart = () => {
@@ -65,8 +62,9 @@ export const useCartStore = defineStore('cart', () => {
       return
 
     items.value = null
-    status.value = 'idle'
     localStorage.value = undefined
+
+    status.value = 'idle'
   }
 
   const addToCart = async (product: Product, quantity: number = 1) => {

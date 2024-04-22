@@ -1,8 +1,5 @@
 <script setup lang="ts">
 const modalStore = useModalStore()
-const cartStore = useCartStore()
-
-cartStore.initCart()
 </script>
 
 <template>

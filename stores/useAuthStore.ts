@@ -32,9 +32,6 @@ export const useAuthStore = defineStore('auth', () => {
       cartStore.fetchCart()
 
       session.value = login.value.data?.session
-
-      /* TODO: исправить когда будет полноценная система с корзиной */
-      cartStore.removeCart()
     }
 
     return { login, ...etc }
