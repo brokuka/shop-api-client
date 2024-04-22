@@ -1,10 +1,9 @@
 export default defineNuxtRouteMiddleware(async () => {
   const token = useCookie('token')
   const userStore = useUserStore()
-  const cartStore = useCartStore()
 
+  // eslint-disable-next-line curly
   if (token.value && !userStore.user) {
     await userStore.fetchUser()
-    await cartStore.fetchCart()
   }
 })
