@@ -6,8 +6,9 @@ cartStore.initCart()
 </script>
 
 <template>
+  <NuxtLoadingIndicator />
+
   <NuxtLayout>
-    <NuxtLoadingIndicator />
     <NuxtPage />
   </NuxtLayout>
 
