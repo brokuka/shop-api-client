@@ -1,5 +1,9 @@
 <script setup lang="ts">
+const cartStore = useCartStore()
+const authStore = useAuthStore()
 const modalStore = useModalStore()
+
+authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
 </script>
 
 <template>

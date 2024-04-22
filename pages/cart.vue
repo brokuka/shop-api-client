@@ -8,8 +8,6 @@ definePageMeta({
   layout: 'without-container',
 })
 
-authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
-
 const isLoading = computed(() => cartStore.isLoading && authStore.isAuthenticated)
 </script>
 
