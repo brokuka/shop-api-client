@@ -32,11 +32,11 @@ const links = [
 const items = Array.from(links, links => [links])
 
 const navigationConfig = {
-  size: 'text-base',
+  size: tw('text-base'),
 }
 
 const dropdownConfig = {
-  width: 'w-full',
+  width: tw('w-full'),
 }
 
 onMounted(() => (isLoading.value = false))

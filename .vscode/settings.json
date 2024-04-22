@@ -39,7 +39,7 @@
     "yaml"
   ],
 
-  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  "tailwindCSS.experimental.classRegex": ["tw(.*?))", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
   "files.associations": {
     "*.css": "tailwindcss"
   },

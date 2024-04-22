@@ -17,12 +17,12 @@ const windowSize = useWindowSize()
 const isTablet = computed(() => windowSize.width.value > 768)
 
 const buttonConfig = {
-  base: 'justify-center md:max-w-[200px]',
+  base: tw('justify-center md:max-w-[200px]'),
 }
 
 const buttonSkeletonConfig = {
-  base: 'max-w-[200px]',
-  background: 'bg-gray-200',
+  base: tw('max-w-[200px]'),
+  background: tw('bg-gray-200'),
 }
 </script>
 

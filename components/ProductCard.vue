@@ -13,9 +13,9 @@ const product = computed(() => ({ ...props }))
 const cardConfig = {
   base: '',
   shadow: '',
-  ring: 'ring-0',
+  ring: tw('ring-0'),
   body: {
-    padding: 'py-3 sm:py-2 px-0 sm:px-0',
+    padding: tw('py-3 sm:py-2 px-0 sm:px-0'),
   },
   header: {
     padding: '',
@@ -23,18 +23,18 @@ const cardConfig = {
 }
 
 const tooltipConfig = {
-  base: 'h-fit text-clip',
-  container: 'z-[2]',
+  base: tw('h-fit text-clip'),
+  container: tw('z-[2]'),
 }
 
 const buttonConfig = {
-  rounded: 'rounded-none rounded-b-lg',
+  rounded: tw('rounded-none rounded-b-lg'),
 }
 
 const buttonSkeletonConfig = {
   base: '',
-  rounded: 'rounded-none rounded-b-lg',
-  background: 'bg-gray-200',
+  rounded: tw('rounded-none rounded-b-lg'),
+  background: tw('bg-gray-200'),
 }
 </script>
 

@@ -50,7 +50,7 @@ async function onSubmit(event: UpdateProfileDataSchemaType) {
 }
 
 const tooltipConfig = {
-  wrapper: 'w-full',
+  wrapper: tw('w-full'),
   width: '',
 }
 
