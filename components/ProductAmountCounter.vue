@@ -13,13 +13,11 @@ const windowSize = useWindowSize()
 const isDecreaseButtonDisabled = computed(() => props.value <= 1)
 const isTablet = computed(() => windowSize.width.value > 768)
 
-function onChange(e: Event) {
-  const target = e.target as HTMLInputElement
-
-  if (!target.value.length)
+function onChange(amount: string) {
+  if (!amount.length)
     return
 
-  return emit('change', Number(target.value))
+  return emit('change', Number(amount))
 }
 
 function onBlur(e: Event) {
@@ -49,12 +47,13 @@ function onBlur(e: Event) {
     <UInput
       v-maska
       :model-value="!value ? 1 : value"
-      data-maska-tokens="A:[0-9]:multiple"
-      data-maska="A"
+      data-maska-tokens="A:[1-9]:multiple|B:[0-9]:multiple"
+      data-maska="AB"
       class="max-w-[70px]"
       @blur="onBlur"
       @change="onChange"
     />
+    <!-- @input="onChange" -->
 
     <UTooltip text="Увеличить" :popper="{ arrow: true }" :prevent="cartStore.isLoading || !isTablet">
       <UButton icon="i-mdi-plus" variant="soft" @click="emit('increase')" />
