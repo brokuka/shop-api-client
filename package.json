@@ -1,6 +1,9 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "nuxt dev --dotenv .env.development",
     "build:dev": "nuxt build --dotenv .env.development",
@@ -12,7 +15,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@iconify-json/mdi": "^1.1.55",
+    "@iconify-json/mdi": "^1.1.66",
     "@nuxt/ui": "npm:@nuxt/ui-edge@latest",
     "@pinia/nuxt": "^0.5.1",
     "maska": "^2.1.10",
