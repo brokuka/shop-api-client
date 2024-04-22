@@ -1,8 +1,4 @@
 {
-  "files.associations": {
-    "*.css": "postcss"
-  },
-
   // Enable the ESlint flat config support
   "eslint.experimental.useFlatConfig": true,
 
@@ -41,5 +37,13 @@
     "json",
     "jsonc",
     "yaml"
-  ]
+  ],
+
+  "tailwindCSS.experimental.classRegex": ["tw`(.*?)`", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }

@@ -9,9 +9,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/cart/**': {
-      prerender: true,
-    },
     '/api/**': {
       proxy: {
         to: `${process.env.API_DOMAIN}/api/**`,
@@ -34,7 +31,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', "@nuxt/ui"],
+  modules: ['@pinia/nuxt', '@vueuse/nuxt', 'dayjs-nuxt', '@nuxt/ui'],
 
   ui: {
     icons: ['mdi'],
@@ -50,5 +47,9 @@ export default defineNuxtConfig({
     public: {
       API_DOMAIN: process.env.API_DOMAIN,
     },
+  },
+
+  tailwindcss: {
+    editorSupport: true,
   },
 })
