@@ -13,18 +13,22 @@ definePageMeta({
     <template #fallback>
       <CartContainer>
         <div class="space-y-3 lg:col-span-2">
-          <CartCardSkeleton v-for="item in createArray(SKELETON_ITEMS_COUNT)" :key="item" />
+          <CartCardSkeleton v-for="order in SKELETON_ITEMS_COUNT" :key="order" />
         </div>
 
         <CartSummarySkeleton />
       </CartContainer>
     </template>
 
-    <CartContainer v-if="cartStore.items">
+    <CartContainer v-if="cartStore.items?.length">
       <CartList class="lg:col-span-2" :items="cartStore.items" />
       <CartSummary />
     </CartContainer>
 
-    <Result v-else title="Корзина пуста 😳" class="grid h-full place-items-center" />
+    <Result v-else title="Корзина пуста 😳" class="grid h-full place-items-center">
+      <UButton to="/products">
+        Перейти к каталогу
+      </UButton>
+    </Result>
   </ClientOnly>
 </template>
