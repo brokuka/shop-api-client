@@ -20,7 +20,6 @@ export type CartStatus = 'idle' | 'loading'
 
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore()
-  const userStore = useUserStore()
   const localStorage = useLocalStorage<CartItem[]>('cart_entities', [], { writeDefaults: false })
 
   const items = ref<Nullable<CartItem[]>>(null)
@@ -77,7 +76,6 @@ export const useCartStore = defineStore('cart', () => {
       await useAuthFetch('/cart', {
         method: 'POST',
         body: {
-          user_id: userStore.user?.user_id,
           product_id,
           quantity,
         },
@@ -95,9 +93,6 @@ export const useCartStore = defineStore('cart', () => {
     if (authStore.isAuthenticated) {
       await useAuthFetch(`/cart/${product_id}`, {
         method: 'DELETE',
-        body: {
-          user_id: userStore.user?.user_id,
-        },
       })
     }
 
@@ -113,7 +108,6 @@ export const useCartStore = defineStore('cart', () => {
     await useAuthFetch('/cart/update', {
       method: 'POST',
       body: {
-        user_id: userStore.user?.user_id,
         product_id: existingProduct.product_id,
         quantity: existingProduct.quantity,
       },
