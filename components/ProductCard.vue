@@ -43,7 +43,7 @@ const buttonSkeletonConfig = {
     <div class="flex w-full flex-col rounded-lg shadow dark:bg-gray-900">
       <NuxtLink
         class="relative h-full w-full px-2 pt-4 before:absolute before:inset-0 before:z-[1] md:px-4"
-        :to="`/product/${product_id}`"
+        :to="`/product/${slug}`"
       >
         <UCard
           class="flex h-full flex-col space-y-3 [&>*:nth-child(2)]:h-full [&>*:nth-child(2)]:flex-1"

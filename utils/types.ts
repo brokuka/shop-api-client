@@ -15,6 +15,7 @@ export interface Product {
   image: string
   description: string
   category: string
+  slug: string
 }
 
 export interface Order {

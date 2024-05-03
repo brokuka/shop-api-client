@@ -17,6 +17,7 @@ defineProps<{
       :product_id="item.product_id"
       :image="item.image"
       :title="item.title"
+      :slug="item.slug"
     />
   </div>
 </template>
