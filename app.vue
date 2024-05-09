@@ -28,7 +28,7 @@ body {
 }
 
 .root-container {
-  @apply pb-20 pt-6 md:py-10;
+  @apply pb-20 pt-6 md:pt-10 md:pb-[3.5rem];
 }
 
 .product-card:nth-child(2) {
