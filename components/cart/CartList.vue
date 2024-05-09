@@ -19,6 +19,7 @@ defineProps<{
         :image="item.image"
         :title="item.title"
         :quantity="item.quantity"
+        :slug="item.slug"
       />
     </div>
   </div>
