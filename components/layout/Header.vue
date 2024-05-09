@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { version } from '../../package.json'
+
 defineOptions({
   inheritAttrs: true,
 })
+
 const modalStore = useModalStore()
 const authStore = useAuthStore()
 const cartStore = useCartStore()
@@ -12,6 +15,7 @@ const cartStore = useCartStore()
     <UContainer class="flex h-16 items-center justify-between">
       <ULink to="/" class="hover:text-primary p-4.5 text-lg font-medium" active-class="text-primary">
         SHOP-API
+        <sup class="text-black">v{{ version }}</sup>
       </ULink>
 
       <NavigationLinks class="hidden md:block" />
