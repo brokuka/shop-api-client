@@ -27,7 +27,7 @@ function onAmountDecrease() {
     class="flex h-fit flex-col space-y-5 rounded-lg bg-white p-4 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-gray-800 md:space-x-4"
   >
     <div class="flex space-x-2">
-      <div class="w-full max-w-[80px] shrink-0 md:max-w-[126px]">
+      <NuxtLink :to="`/product/${slug}`" class="w-full max-w-[80px] shrink-0 md:max-w-[126px]" tabindex="-1">
         <Image
           :image-src="image"
           :title="title"
@@ -36,7 +36,7 @@ function onAmountDecrease() {
           container-class="w-full aspect-w-[80] aspect-h-[80]"
           class="object-contain"
         />
-      </div>
+      </NuxtLink>
 
       <div class="flex flex-1 flex-col space-y-5">
         <div class="flex flex-1 flex-col space-y-2">
