@@ -8,6 +8,10 @@ definePageMeta({
   layout: 'without-container',
 })
 
+useHead({
+  title: 'Корзина',
+})
+
 const isLoading = computed(() => cartStore.isLoading && authStore.isAuthenticated)
 </script>
 

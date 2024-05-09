@@ -3,6 +3,10 @@ definePageMeta({
   middleware: 'auth',
   redirect: '/profile/info',
 })
+
+useHead({
+  title: 'Профиль',
+})
 </script>
 
 <template>

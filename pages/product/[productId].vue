@@ -6,6 +6,11 @@ const { data: product } = await useDefaultFetch(`/product/${route.params.product
   transform: (r: ApiResponse<Product>) => r.data,
 })
 
+useHead({
+  title: product.value?.title,
+  templateParams: undefined,
+})
+
 if (!product.value) {
   throw createError({
     statusCode: 404,

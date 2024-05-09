@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { User } from '~/utils/types'
+import type { ApiResponse, User } from '~/utils/types'
 
 const userStore = useUserStore()
 const toast = useToast()
@@ -25,25 +25,19 @@ const isTablet = computed(() => windowSize.width.value >= 768)
 
 const isLoading = ref(false)
 
-interface UpdateProfileDataResponse {
-  user: User
-  message: string
-}
-
 async function onSubmit(event: UpdateProfileDataSchemaType) {
   isLoading.value = true
 
-  const { data } = await useAuthFetch<UpdateProfileDataResponse>('/user', {
+  const { data: response } = await useAuthFetch<ApiResponse<User>>('/user', {
     method: 'PATCH',
     body: {
-      user_id: userStore.user?.user_id,
       ...event.data,
     },
   })
 
-  if (data.value) {
-    userStore.user = data.value.user
-    toast.add({ title: data.value.message })
+  if (response.value) {
+    userStore.user = response.value.data
+    response.value.message && toast.add({ title: response.value.message })
   }
 
   isLoading.value = false

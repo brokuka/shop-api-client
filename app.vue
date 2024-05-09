@@ -3,6 +3,10 @@ const cartStore = useCartStore()
 const authStore = useAuthStore()
 const modalStore = useModalStore()
 
+useHead({ title: 'Главная страница', titleTemplate: (titleChunk) => {
+  return `${APP_NAME} - ${titleChunk}`
+} })
+
 authStore.isAuthenticated ? await cartStore.fetchCart() : cartStore.initCart()
 </script>
 
