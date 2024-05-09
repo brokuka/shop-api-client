@@ -1,5 +1,6 @@
 {
-  "name": "nuxt-app",
+  "name": "shop-api",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "yarn@4.2.2",
   "engines": {
