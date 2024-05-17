@@ -26,12 +26,11 @@ const reachLimit = computed(() => {
   return props.quantity > QUANTITY_LIMIT ? `${QUANTITY_LIMIT}+` : props.quantity
 })
 
-const classes
-  = 'focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 px-2.5 py-1.5 lg:hover:bg-primary-50 disabled:bg-transparent lg:dark:hover:bg-primary-950 dark:disabled:bg-transparent focus-visible:ring-2 focus-visible:ring-inset lg:focus-visible:ring-primary-500 lg:dark:focus-visible:ring-primary-400 inline-flex items-center'
+const LINK_BASE_CLASSES = tw('text-sm font-medium')
 </script>
 
 <template>
-  <ULink :class="twMerge(classes, wrapperClasses)" :to="to" class="relative" active-class="text-primary">
+  <ULink :class="[LINK_BASE_CLASSES, wrapperClasses]" :to="to" class="relative" active-class="text-primary">
     <ClientOnly>
       <template #fallback>
         <UChip :show="false" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
