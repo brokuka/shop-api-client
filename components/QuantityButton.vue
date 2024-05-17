@@ -28,7 +28,7 @@ const LINK_BASE_CLASSES = tw('text-sm font-medium md:px-2.5 md:py-1.5 md:hover:b
 </script>
 
 <template>
-  <ULink :class="[LINK_BASE_CLASSES, wrapperClasses]" :to="to" class="relative" active-class="text-primary">
+  <ULink :class="[LINK_BASE_CLASSES, wrapperClasses]" :to="to" class="relative" active-class="text-primary" aria-label="Корзина">
     <ClientOnly>
       <template #fallback>
         <UChip :show="false" size="2xl" :inset="inset" class="absolute right-0 top-0.5" />
