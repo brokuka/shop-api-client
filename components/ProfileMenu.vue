@@ -14,11 +14,6 @@ const links = [
     to: '/profile/orders',
   },
   {
-    label: 'Избранное',
-    // to: '/profile/favorites',
-    disabled: true,
-  },
-  {
     label: 'Выйти из аккаунта',
     icon: 'i-mdi-location-exit',
     click: async () => {
