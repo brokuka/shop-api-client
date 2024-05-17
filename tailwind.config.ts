@@ -1,4 +1,9 @@
 import type { Config } from 'tailwindcss'
+import { SCREEN_SIZES } from './utils/constants'
+
+const screens = Object.fromEntries(
+  Object.entries(SCREEN_SIZES).map(([key, value]) => [key.toLowerCase(), `${value}px`]),
+)
 
 export default <Partial<Config>>{
   theme: {
@@ -6,12 +11,7 @@ export default <Partial<Config>>{
       spacing: {
         4.5: '1.125rem',
       },
-      screens: {
-        sm: '576px',
-        md: '768px',
-        lg: '992px',
-        xl: '1200px',
-      },
+      screens,
     },
   },
 }
