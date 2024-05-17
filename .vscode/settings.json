@@ -40,6 +40,11 @@
   ],
 
   "tailwindCSS.experimental.classRegex": ["tw(.*?))", "tw\\('(.*?)'\\)", "tw\\(\\s*('(.*?)'|\"(.*?)\")\\s*\\)"],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "active-class",
+    "inactive-class"
+  ],
   "files.associations": {
     "*.css": "tailwindcss"
   },
