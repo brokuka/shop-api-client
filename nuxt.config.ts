@@ -1,3 +1,8 @@
+/** В будущем если нужно будет можно добавить остальные тэги */
+const META_CONTENT = {
+  DESCRIPTION: 'Демонстративный проект который показывает как работает интерфейс интернет-магазина',
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -6,6 +11,12 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'ru',
       },
+      meta: [
+        {
+          name: 'description',
+          content: META_CONTENT.DESCRIPTION,
+        },
+      ],
     },
   },
 
