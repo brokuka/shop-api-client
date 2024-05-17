@@ -4,6 +4,19 @@ import type { Product } from '~/utils/types'
 defineProps<{
   items: Product[]
 }>()
+
+const localStorage = useLocalStorage<number[]>('favorite_entities', [], { writeDefaults: false })
+
+const isFavorited = (product_id: number) => localStorage.value.includes(product_id)
+
+function onFavorite(product_id: number) {
+  if (isFavorited(product_id)) {
+    localStorage.value = localStorage.value.filter(id => product_id !== id)
+    return
+  }
+
+  localStorage.value.push(product_id)
+}
 </script>
 
 <template>
@@ -18,6 +31,8 @@ defineProps<{
       :image="item.image"
       :title="item.title"
       :slug="item.slug"
+      :favorited="isFavorited(item.product_id)"
+      @favorite="onFavorite(item.product_id)"
     />
   </div>
 </template>
