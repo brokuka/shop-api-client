@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import type { Product } from '~/utils/types'
 
-const { ...props } = defineProps<Product>()
+const props = defineProps<Product & { favorited: boolean }>()
+
+const emit = defineEmits<{
+  favorite: []
+}>()
 
 const windowSize = useWindowSize()
 
 const cartStore = useCartStore()
 
-const isTablet = computed(() => windowSize.width.value > 768)
+const isTablet = computed(() => windowSize.width.value > SCREEN_SIZES.MD)
 const product = computed(() => ({ ...props }))
 
 const cardConfig = {
@@ -28,7 +32,7 @@ const tooltipConfig = {
 }
 
 const buttonConfig = {
-  rounded: tw('rounded-none rounded-b-lg'),
+  rounded: tw('rounded-none rounded-b-lg z-[2]'),
 }
 
 const buttonSkeletonConfig = {
@@ -36,17 +40,20 @@ const buttonSkeletonConfig = {
   rounded: tw('rounded-none rounded-b-lg'),
   background: tw('bg-gray-200'),
 }
+
+const favoriteButtonBaseClasses = tw('text-2xl opacity-0 group-hover:opacity-100 focus-visible:opacity-100 outline-none ring-inset ring-current focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 rounded-md')
+const favoriteIcon = computed(() => product.value.favorited ? 'i-mdi-cards-heart' : 'i-mdi-cards-heart-outline')
 </script>
 
 <template>
   <UTooltip :text="title" :ui="tooltipConfig" :popper="{ arrow: true, placement: 'bottom' }" :prevent="!isTablet">
-    <div class="flex w-full flex-col rounded-lg shadow dark:bg-gray-900">
+    <div class="flex w-full flex-col rounded-lg shadow dark:bg-gray-900 group">
       <NuxtLink
         class="relative h-full w-full px-2 pt-4 before:absolute before:inset-0 before:z-[1] md:px-4"
         :to="`/product/${slug}`"
       >
         <UCard
-          class="flex h-full flex-col space-y-3 [&>*:nth-child(2)]:h-full [&>*:nth-child(2)]:flex-1"
+          class="flex h-full flex-col space-y-3 [&>*:nth-child(2)]:h-full [&>*:nth-child(2)]:flex-1 relative"
           :ui="cardConfig"
         >
           <template #header>
@@ -70,17 +77,22 @@ const buttonSkeletonConfig = {
       </NuxtLink>
 
       <ClientOnly>
-        <UButton
-          v-if="!cartStore.isInCart(product.product_id)"
-          block
-          :ui="buttonConfig"
-          @click="cartStore.addToCart(product)"
+        <button
+          :class="[favoriteButtonBaseClasses, {
+            'opacity-100': favorited,
+          }]" class="absolute top-1 right-1 z-[2] leading-3 p-1" @click="emit('favorite')"
         >
-          {{ isTablet ? 'Добавить в корзину' : 'Добавить' }}
+          <UIcon
+            :class="{ 'text-red-500': favorited }" :name="favoriteIcon"
+          />
+        </button>
+
+        <UButton v-if="cartStore.isInCart(product.product_id)" block :ui="buttonConfig" variant="outline" @click="navigateTo('/cart')">
+          {{ isTablet ? 'Добавлен в корзину' : 'Добавлен' }}
         </UButton>
 
-        <UButton v-else block :ui="buttonConfig" variant="outline" @click="navigateTo('/cart')">
-          {{ isTablet ? 'Добавлен в корзину' : 'Добавлен' }}
+        <UButton v-else block :ui="buttonConfig" @click="cartStore.addToCart(product)">
+          {{ isTablet ? 'Добавить в корзину' : 'Добавить' }}
         </UButton>
 
         <template #fallback>

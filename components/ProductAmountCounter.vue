@@ -11,7 +11,7 @@ const cartStore = useCartStore()
 const windowSize = useWindowSize()
 
 const isDecreaseButtonDisabled = computed(() => props.value <= 1)
-const isTablet = computed(() => windowSize.width.value > 768)
+const isTablet = computed(() => windowSize.width.value > SCREEN_SIZES.MD)
 
 function onChange(amount: string) {
   if (!amount.length)

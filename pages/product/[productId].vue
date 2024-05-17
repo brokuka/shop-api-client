@@ -19,7 +19,7 @@ if (!product.value) {
 }
 
 const windowSize = useWindowSize()
-const isTablet = computed(() => windowSize.width.value > 768)
+const isTablet = computed(() => windowSize.width.value > SCREEN_SIZES.MD)
 
 const buttonConfig = {
   base: tw('justify-center md:max-w-[200px]'),

@@ -21,7 +21,7 @@ const isDirty = computed(() => {
 
   return false
 })
-const isTablet = computed(() => windowSize.width.value >= 768)
+const isTablet = computed(() => windowSize.width.value >= SCREEN_SIZES.MD)
 
 const isLoading = ref(false)
 

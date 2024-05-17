@@ -7,7 +7,7 @@ const windowSize = useWindowSize()
 
 const { quantity } = toRefs(props)
 
-const isTablet = computed(() => windowSize.width.value > 768)
+const isTablet = computed(() => windowSize.width.value > SCREEN_SIZES.MD)
 
 function onAmountChange(value: number) {
   cartStore.changeProductCount(props.product_id, value)
