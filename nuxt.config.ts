@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   app: {
     rootId: 'app',
+    head: {
+      htmlAttrs: {
+        lang: 'ru',
+      },
+    },
   },
 
   typescript: {
