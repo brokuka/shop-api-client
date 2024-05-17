@@ -43,6 +43,7 @@ const buttonSkeletonConfig = {
 
 const favoriteButtonBaseClasses = tw('text-2xl md:opacity-0 group-hover:opacity-100 focus-visible:opacity-100 outline-none ring-inset ring-current focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 rounded-md')
 const favoriteIcon = computed(() => product.value.favorited ? 'i-mdi-cards-heart' : 'i-mdi-cards-heart-outline')
+const favoriteAriaLabel = computed(() => product.value.favorited ? 'Убрать из избранных' : 'Добавить в избранное')
 </script>
 
 <template>
@@ -80,7 +81,8 @@ const favoriteIcon = computed(() => product.value.favorited ? 'i-mdi-cards-heart
         <button
           :class="[favoriteButtonBaseClasses, {
             'md:opacity-100': favorited,
-          }]" class="absolute top-1 right-1 z-[2] leading-3 p-1" @click="emit('favorite')"
+          }]" class="absolute top-1 right-1 z-[2] leading-3 p-1" :aria-label="favoriteAriaLabel"
+          @click="emit('favorite')"
         >
           <UIcon
             :class="{ 'text-red-500': favorited }" :name="favoriteIcon"
