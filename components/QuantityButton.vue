@@ -24,7 +24,7 @@ const reachLimit = computed(() => {
   return props.quantity > QUANTITY_LIMIT ? `${QUANTITY_LIMIT}+` : props.quantity
 })
 
-const LINK_BASE_CLASSES = tw('text-sm font-medium')
+const LINK_BASE_CLASSES = tw('text-sm font-medium md:px-2.5 md:py-1.5 md:hover:bg-primary-50 md:dark:hover:bg-primary-950 rounded-md')
 </script>
 
 <template>
