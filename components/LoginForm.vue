@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormErrorEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormErrorEvent } from '#ui/types'
 
 const authStore = useAuthStore()
 const modalStore = useModalStore()
