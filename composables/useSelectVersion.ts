@@ -27,14 +27,14 @@ export function useSelectVersion() {
 
     console.log(nextVersionUrl)
 
-    // if (v === currentVersion.value.name)
-    //   return
+    if (v === currentVersion.value.name)
+      return
 
-    // if (v === 'next')
-    //   return navigateTo(nextVersionUrl, { external: true, replace: true })
+    if (v === 'next')
+      return navigateTo(nextVersionUrl, { external: true, replace: true })
 
-    // if (v === 'main')
-    //   return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
+    if (v === 'main')
+      return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
   }
 
   return {
