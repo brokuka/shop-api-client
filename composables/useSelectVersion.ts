@@ -25,16 +25,18 @@ export function useSelectVersion() {
     const hasSubDomain = isSubdomain(url.host)
     const nextVersionUrl = `${protocol}next.${hasSubDomain ? removeSubdomain(url.host) : url.host}`
 
-    console.log(nextVersionUrl)
+    console.log('@hasSubDomain', hasSubDomain)
+    console.log('@nextVersionUrl', nextVersionUrl)
+    console.log('@removeSubdomain', removeSubdomain(url.host))
 
-    if (v === currentVersion.value.name)
-      return
+    // if (v === currentVersion.value.name)
+    //   return
 
-    if (v === 'next')
-      return navigateTo(nextVersionUrl, { external: true, replace: true })
+    // if (v === 'next')
+    //   return navigateTo(nextVersionUrl, { external: true, replace: true })
 
-    if (v === 'main')
-      return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
+    // if (v === 'main')
+    //   return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
   }
 
   return {
