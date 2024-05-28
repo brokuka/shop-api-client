@@ -12,12 +12,12 @@ const cartStore = useCartStore()
   <header class="z-[3] border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
     <UContainer class="flex h-16 items-center justify-between">
       <ULink
-        to="/" class="flex gap-1 hover:text-primary p-4.5 text-lg font-medium group items-center justify-center"
+        to="/" class="flex gap-3 hover:text-primary font-medium group items-center justify-center text-lg"
         active-class="text-primary"
       >
-        <span class="">SHOP-API</span>
+        <span class="shrink-0">SHOP-API</span>
 
-        <VersionSelect class="hidden lg:block" placement="bottom" />
+        <VersionSelect class="hidden lg:block" />
       </ULink>
 
       <NavigationLinks class="hidden md:block" />
