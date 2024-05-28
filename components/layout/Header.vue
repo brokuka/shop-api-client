@@ -11,14 +11,16 @@ const cartStore = useCartStore()
 <template>
   <header class="z-[3] border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
     <UContainer class="flex h-16 items-center justify-between">
-      <ULink
-        to="/" class="flex gap-3 hover:text-primary font-medium group items-center justify-center text-lg"
-        active-class="text-primary"
-      >
-        <span class="shrink-0">SHOP-API</span>
+      <div class="flex gap-3">
+        <ULink
+          to="/" class="hover:text-primary font-medium group items-center justify-center text-lg shrink-0"
+          active-class="text-primary"
+        >
+          SHOP-API
+        </ULink>
 
         <VersionSelect class="hidden lg:block" />
-      </ULink>
+      </div>
 
       <NavigationLinks class="hidden md:block" />
 
