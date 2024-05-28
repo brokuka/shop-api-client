@@ -1,3 +1,5 @@
+import { version } from './package.json'
+
 /** В будущем если нужно будет можно добавить остальные тэги */
 const META_CONTENT = {
   DESCRIPTION: 'Демонстративный проект который показывает как работает интерфейс интернет-магазина',
@@ -17,6 +19,13 @@ export default defineNuxtConfig({
           content: META_CONTENT.DESCRIPTION,
         },
       ],
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      version,
+      API_DOMAIN: process.env.API_DOMAIN,
     },
   },
 
@@ -57,12 +66,6 @@ export default defineNuxtConfig({
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
     plugins: ['localizedFormat'],
-  },
-
-  runtimeConfig: {
-    public: {
-      API_DOMAIN: process.env.API_DOMAIN,
-    },
   },
 
   tailwindcss: {

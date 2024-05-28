@@ -30,15 +30,11 @@ const NAVIGATION = computed(() => [
     class="fixed bottom-0 left-0 right-0 z-[2] border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-black md:hidden"
   >
     <div class="flex items-center justify-between">
+      <VersionSelect class="pl-3" placement="top" />
+
       <QuantityButton
-        v-for="item in NAVIGATION"
-        :key="item.id"
-        :to="item.href"
-        :label="item.label"
-        :quantity="item.quantity"
-        variant="ghost"
-        wrapper-classes="p-4.5"
-        inset
+        v-for="item in NAVIGATION" :key="item.id" :to="item.href" :label="item.label"
+        :quantity="item.quantity" variant="ghost" wrapper-classes="p-4.5" inset
       />
 
       <QuantityButton variant="ghost" wrapper-classes="p-4.5" inset :to="navigateUserButton" @click="handleUserButton">
