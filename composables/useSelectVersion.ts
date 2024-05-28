@@ -4,8 +4,6 @@ export function useSelectVersion() {
   const url = useRequestURL()
   const config = useRuntimeConfig().public
 
-  console.log('@url', url)
-
   const versions = computed(() => [{
     name: 'main',
     label: 'main',
@@ -20,23 +18,20 @@ export function useSelectVersion() {
 
   const currentVersion = computed(() => versions.value.find(version => url.hostname.startsWith('next') ? version.name === 'next' : version.name === 'main') as typeof versions.value[number])
 
-  function select(v: VersionName) {
+  const hasSubDomain = computed(() => Boolean(url.host.match(URL_WITH_SUBDOMAIN)))
+
+  function select(version: VersionName) {
     const protocol = `${url.protocol}//`
-    const hasSubDomain = isSubdomain(url.host)
-    const nextVersionUrl = `${protocol}next.${hasSubDomain ? removeSubdomain(url.host) : url.host}`
+    const nextVersionUrl = `${protocol}next.${hasSubDomain.value ? removeSubdomain(url.host) : url.host}`
 
-    console.log('@hasSubDomain', hasSubDomain)
-    console.log('@nextVersionUrl', nextVersionUrl)
-    console.log('@removeSubdomain', removeSubdomain(url.host))
+    if (version === currentVersion.value.name)
+      return
 
-    // if (v === currentVersion.value.name)
-    //   return
+    if (version === 'next')
+      return navigateTo(nextVersionUrl, { external: true, replace: true })
 
-    // if (v === 'next')
-    //   return navigateTo(nextVersionUrl, { external: true, replace: true })
-
-    // if (v === 'main')
-    //   return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
+    if (version === 'main')
+      return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
   }
 
   return {

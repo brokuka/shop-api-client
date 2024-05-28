@@ -10,3 +10,4 @@ export const SCREEN_SIZES = {
 } as const
 
 export const URL_SUBDOMAIN_REGEX = /^([a-zA-Z0-9][a-zA-Z0-9-]{0,61}\.)/
+export const URL_WITH_SUBDOMAIN = /^(?!-)[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+(\.[a-zA-Z]{2,}|:\d+)$/
