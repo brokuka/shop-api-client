@@ -28,10 +28,10 @@ export function useSelectVersion() {
       return
 
     if (version === 'next')
-      return navigateTo(nextVersionUrl, { external: true, replace: true })
+      return navigateTo(nextVersionUrl, { external: true })
 
     if (version === 'main')
-      return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true, replace: true })
+      return navigateTo(`${protocol}${removeSubdomain(url.host)}`, { external: true })
   }
 
   return {
