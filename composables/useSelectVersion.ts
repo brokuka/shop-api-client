@@ -4,6 +4,8 @@ export function useSelectVersion() {
   const url = useRequestURL()
   const config = useRuntimeConfig().public
 
+  console.log('@url', url)
+
   const versions = computed(() => [{
     name: 'main',
     label: 'main',
@@ -19,7 +21,7 @@ export function useSelectVersion() {
   const currentVersion = computed(() => versions.value.find(version => url.hostname.startsWith('next') ? version.name === 'next' : version.name === 'main') as typeof versions.value[number])
 
   function select(v: VersionName) {
-    const protocol = `${window.location.protocol}//`
+    const protocol = `${url.protocol}//`
     const hasSubDomain = isSubdomain(url.host)
     const nextVersionUrl = `${protocol}next.${hasSubDomain ? removeSubdomain(url.host) : url.host}`
 
