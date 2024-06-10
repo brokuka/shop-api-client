@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import type { ApiResponse, Order } from '~/utils/types'
 
-const { data: orders } = await useAuthFetch<ApiResponse<Order[]>>('/order')
+const nuxtApp = useNuxtApp()
+
+const { data: orders } = await useAuthFetch<ApiResponse<Order[]>>('/order', {
+  getCachedData(key) {
+    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+  },
+})
 
 useHead({
   title: 'Мои заказы',
