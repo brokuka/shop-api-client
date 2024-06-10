@@ -81,7 +81,7 @@ const favoriteAriaLabel = computed(() => product.value.favorited ? 'Убрать
         <button
           :class="[favoriteButtonBaseClasses, {
             'md:opacity-100': favorited,
-          }]" class="absolute top-1 right-1 z-[2] leading-3 p-1" :aria-label="favoriteAriaLabel"
+          }]" class="absolute top-1 right-1 z-[1] leading-3 p-1" :aria-label="favoriteAriaLabel"
           @click="emit('favorite')"
         >
           <UIcon
